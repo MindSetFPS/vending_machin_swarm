@@ -7,7 +7,7 @@ from SQLBase import Base
 
 # We need to have these classes here to register them in database
 from Dinero import Dinero
-from Producto import Producto
+from Product import Product
 
 class IDatabase(ABC):
     @abstractmethod
@@ -70,3 +70,5 @@ class SQLiteRepository(IDatabase):
 
     def delete(self, item):
         pass
+
+repository = SQLiteRepository(db_path="database.db")

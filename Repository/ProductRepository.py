@@ -1,6 +1,6 @@
-from Repository import IDatabase
+from Repository import IDatabase, repository
 
-class ProductService:
+class ProductRepository:
     def __init__(self, repository: IDatabase) -> None:
         self._repository = repository
     
@@ -18,3 +18,5 @@ class ProductService:
     
     def update(self, id):
         return self._repository.update(id)
+    
+product_repository = ProductRepository(repository=repository)
