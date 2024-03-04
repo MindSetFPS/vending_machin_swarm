@@ -1,14 +1,18 @@
+from sqlalchemy import Column, Integer, String
+from SQLBase import Base
 
-class Dinero:
-    
+# Inheriting Base so that this class is considered a Table in our database
+class Dinero (Base):
     def __init__(self, valor: int, cantidad: int ,tipo: str):
         self.valor = valor
         self.cantidad = cantidad
         self.tipo = tipo
-    #debe de de regresar un valor dienero    
+    
+    #Declaring database table properties
+    __tablename__ = "denominations"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    
     def clone (self):
         return (self)
         
-dinero = Dinero(valor=10, cantidad=10, tipo="Moneda")
-
-print(type(dinero.clone()))
