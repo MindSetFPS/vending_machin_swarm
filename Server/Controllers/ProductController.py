@@ -1,5 +1,5 @@
-from ProductRepository import product_repository
-from Repository import IDatabase
+from Repository.ProductRepository import product_repository
+from Repository.Repository import IDatabase
 
 class ProductController:
     def __init__(self, product_repository: IDatabase ) -> None:

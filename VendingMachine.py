@@ -1,12 +1,25 @@
-from Dinero import Dinero 
-from Producto import Producto
-from Monedero import Monedero
+from Server.Models.Dinero import Dinero
+from Server.Models.Product import Product
 import time
 
+class Monedero:
+    def __init__(self, dinero_list):
+        self.available_denominations = dinero_list
+
+    def received_balance_is_in_denominations(self, inserted_balance):
+        denominations = [dinero.valor for dinero in self.available_denominations]
+        return inserted_balance in denominations
+    def total_money(self):
+        return sum(d.valor * d.cantidad for d in self.available_denominations)
+
+    def can_give_change(self, price, balance):
+        # Lógica para dar cambio
+        return True 
+
 class Maquina:
-    def __init__(self, SelectedProductCode: str, balance: int ):
-        self.SelectedProductCode = SelectedProductCode
-        self.balance = balance
+    def __init__(self):
+        # self.SelectedProductCode = SelectedProductCode
+        # self.balance = balance
         self.selected_product_code = None
         self.balance = 0
         self.monedero = Monedero([
@@ -18,12 +31,12 @@ class Maquina:
             Dinero(valor=50, cantidad=0, tipo="Billete"),
         ])
         self.products = [
-            Producto(code="A1", name="Papitas", price=15, stock=10),
-            Producto(code="A2", name="Jugo de Naranja", price=20, stock=10),
-            Producto(code="A3", name="Café con leche", price=35, stock=10),
-            Producto(code="A4", name="Mantecadas", price=28, stock=10),
-            Producto(code="B1", name="Bizcochitos", price=12, stock=1),
-            Producto(code="B2", name="Gansito", price=21, stock=10)
+            Product(code="A1", name="Papitas", price=15, stock=10),
+            Product(code="A2", name="Jugo de Naranja", price=20, stock=10),
+            Product(code="A3", name="Café con leche", price=35, stock=10),
+            Product(code="A4", name="Mantecadas", price=28, stock=10),
+            Product(code="B1", name="Bizcochitos", price=12, stock=1),
+            Product(code="B2", name="Gansito", price=21, stock=10)
         ]
 
     def machine_loop(self):
@@ -67,7 +80,7 @@ class Maquina:
 
         drop_product = False
         if inserted_balance == product_price:
-            print("Entregar producto")
+            print("Entregar Product")
             drop_product = True
 
         if inserted_balance > product_price:
@@ -80,11 +93,6 @@ class Maquina:
 
     def update_stock(self, product):
         product.stock -= 1
-
-    @staticmethod
-    def clear_console():
-        import os
-        os.system('cls' if os.name == 'nt' else 'clear')
 
 if __name__ == "__main__":
     maquina = Maquina()

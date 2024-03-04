@@ -3,11 +3,11 @@ from abc import ABC, abstractmethod
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
-from SQLBase import Base
+from Repository.SQLBase import Base
 
 # We need to have these classes here to register them in database
-from Dinero import Dinero
-from Product import Product
+from Models.Dinero import Dinero
+from Models.Product import Product
 
 class IDatabase(ABC):
     @abstractmethod

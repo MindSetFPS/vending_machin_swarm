@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from SQLBase import Base
+from ..Repository.SQLBase import Base
 
 # Inheriting Base so that this class is considered a Table in our database
 class Dinero (Base):

@@ -1,4 +1,5 @@
-from SQLBase import Base
+from ..Repository.SQLBase import Base
+
 from sqlalchemy import Column, Integer, String, Uuid, Float
 
 class Product(Base):
