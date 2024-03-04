@@ -1,16 +1,12 @@
 from Dinero import Dinero 
 from Producto import Producto
 from Monedero import Monedero
-
-
+import time
 
 class Maquina:
-
     def __init__(self, SelectedProductCode: str, balance: int ):
         self.SelectedProductCode = SelectedProductCode
         self.balance = balance
-
-    def __init__(self):
         self.selected_product_code = None
         self.balance = 0
         self.monedero = Monedero([
