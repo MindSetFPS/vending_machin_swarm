@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from sqlalchemy.orm import sessionmaker
+
+from sqlmodel import create_engine, SQLModel, Session
 
 from Server.Repository.SQLBase import Base
 
@@ -49,9 +51,10 @@ class SQLiteRepository(IDatabase):
     
     def connect(self):
         self.engine = create_engine("sqlite:///{0}".format(self.db_path), echo=True)
-        self.connection = self.engine.connect()
+        # self.connection = self.engine.connect()
+        SQLModel.metadata.create_all(self.engine)
 
-        Base.metadata.create_all(self.engine)
+        # Base.metadata.create_all(self.engine)
     
     def disconnect(self):
         pass
@@ -59,13 +62,15 @@ class SQLiteRepository(IDatabase):
     def get_all(self, query):
         sql = text(query)
         return self.connection.execute(sql)
-        
 
     def get_by_id(self, query): 
         pass
 
-    def create(self, item):
-        pass
+    def create(self, product):
+        session = Session(self.engine)
+        session.add(product)
+
+        session.commit()
 
     def update(self, item):
         pass
