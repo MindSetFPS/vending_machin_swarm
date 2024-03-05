@@ -1,4 +1,5 @@
-from Repository.Repository import IDatabase, repository
+# from Repository.Repository import IDatabase, repository
+from Server.Repository.Repository import IDatabase, repository
 
 class ProductRepository:
     def __init__(self, repository: IDatabase) -> None:

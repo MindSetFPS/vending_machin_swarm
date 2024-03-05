@@ -3,12 +3,13 @@ from abc import ABC, abstractmethod
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
-from Repository.SQLBase import Base
+from Server.Repository.SQLBase import Base
 
 # We need to have these classes here to register them in database
-from Models.Dinero import Dinero
-from Models.Product import Product
-from Models.Sale import Sale
+from Server.Models.Dinero import Dinero
+from Server.Models.Product import Product
+from Server.Models.Sale import Sale
+from Server.Models.VendingMachine import VendingMachine
 
 class IDatabase(ABC):
     @abstractmethod
@@ -73,3 +74,4 @@ class SQLiteRepository(IDatabase):
         pass
 
 repository = SQLiteRepository(db_path="database.db")
+repository.connect()
