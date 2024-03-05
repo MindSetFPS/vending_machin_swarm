@@ -8,6 +8,7 @@ from Repository.SQLBase import Base
 # We need to have these classes here to register them in database
 from Models.Dinero import Dinero
 from Models.Product import Product
+from Models.Sale import Sale
 
 class IDatabase(ABC):
     @abstractmethod
