@@ -14,8 +14,8 @@ class ProductRepository:
     def delete(self, id):
         return self._repository.delete(id)
     
-    def create(self):
-        return self._repository.create()
+    def create(self, product):
+        return self._repository.create(product)
     
     def update(self, id):
         return self._repository.update(id)
