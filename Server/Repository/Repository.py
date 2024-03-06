@@ -59,9 +59,11 @@ class SQLiteRepository(IDatabase):
     def disconnect(self):
         pass
     
-    def get_all(self, query):
-        sql = text(query)
-        return self.connection.execute(sql)
+    def get_all(self, statement):
+        session = Session(self.engine)
+        with session:
+            results = session.exec(statement).all()
+        return results
 
     def get_by_id(self, query): 
         pass
