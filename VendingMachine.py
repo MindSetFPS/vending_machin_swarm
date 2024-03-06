@@ -1,6 +1,8 @@
 from Server.Models.Dinero import Dinero
 from Server.Models.Product import Product
+from Server.Models.Sale import Sale
 import time
+import requests
 
 class Monedero:
     def __init__(self, dinero_list):

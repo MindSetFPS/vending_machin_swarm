@@ -1,6 +1,4 @@
-from ..Repository.SQLBase import Base
 from typing import Optional
-from sqlalchemy import Column, Integer, String, Uuid, Float
 from sqlmodel import Field, SQLModel
 
 class Product(SQLModel, table=True):

@@ -1,8 +1,11 @@
-from sqlalchemy import Column, Integer, String, Uuid, DateTime, ForeignKey
-from ..Repository.SQLBase import Base
+from sqlmodel import Field, SQLModel, Relationship
+from typing import Optional
+from datetime import datetime
+from Server.Models.Product import Product
 
-class Sale(Base):
+class Sale(SQLModel, table=True):
     __tablename__ = "sales"
-    id = Column(Uuid, primary_key=True)
-    date = Column(DateTime)
-    product = Column(Uuid, ForeignKey("products.id"))
+    id: Optional[int] = Field(default=None, primary_key=True)
+    date: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+    product_id: int = Field(default=None, foreign_key="products.id")
+    product: Optional[Product] = Relationship()

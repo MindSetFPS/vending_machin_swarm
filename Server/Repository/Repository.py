@@ -1,11 +1,6 @@
 from abc import ABC, abstractmethod
-
-from sqlalchemy import text
-from sqlalchemy.orm import sessionmaker
-
 from sqlmodel import create_engine, SQLModel, Session
 
-from Server.Repository.SQLBase import Base
 
 # We need to have these classes here to register them in database
 from Server.Models.Dinero import Dinero
@@ -54,8 +49,6 @@ class SQLiteRepository(IDatabase):
         self.engine = create_engine("sqlite:///{0}".format(self.db_path), echo=True)
         # self.connection = self.engine.connect()
         SQLModel.metadata.create_all(self.engine)
-
-        # Base.metadata.create_all(self.engine)
     
     def disconnect(self):
         pass
@@ -69,9 +62,9 @@ class SQLiteRepository(IDatabase):
     def get_by_id(self, query): 
         pass
 
-    def create(self, product):
+    def create(self, model):
         session = Session(self.engine)
-        session.add(product)
+        session.add(model)
 
         session.commit()
 
