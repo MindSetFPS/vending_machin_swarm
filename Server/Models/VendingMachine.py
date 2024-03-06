@@ -1,7 +1,7 @@
-from Server.Repository.SQLBase import Base
+from sqlmodel import Field, SQLModel
+from typing import Optional
 
-from sqlalchemy import Column, Uuid
-
-class VendingMachine(Base):
+class VendingMachine(SQLModel, table=True):
     __tablename__ = "vendingmachines"
-    id = Column(Uuid, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True)
+    

@@ -1,8 +1,11 @@
 from Server.Models.Dinero import Dinero
 from Server.Models.Product import Product
 from Server.Models.Sale import Sale
-import time
+from Server.Models.VendingMachine import VendingMachine
+import time, os, random
 import requests
+
+from sqlmodel import Field, SQLModel, create_engine
 
 class Monedero:
     def __init__(self, dinero_list):
@@ -19,9 +22,36 @@ class Monedero:
         return True 
 
 class Maquina:
-    def __init__(self):
+    def __init__(self, id: int = None):
+        # Managing data locally in machines:
+        #   1. get and id via instantiation
+        #   2. if id, search for the named folder
+        #   3. if no id, create folder with db
         # self.SelectedProductCode = SelectedProductCode
         # self.balance = balance
+        
+        if id is not None:
+            self.id = id
+        else:
+            self.id = random.randint(0, 100000)
+
+        folder_exists = False
+
+        for f in os.listdir(os.getcwd()):
+            print(os.path.join("vending_machine_db", f))
+            if os.path.join("vending_machine_db", f) == os.path.join("vending_machine_db", str(int)):
+                folder_exists = True
+                print(folder_exists)
+                break
+        
+        if folder_exists == False:
+            os.makedirs("vending_machine_db", exist_ok=True)
+
+        file_url = os.path.join("vending_machine_db", str(self.id) + ".db")
+        db_url = f"sqlite:///{file_url}" 
+        self.engine = create_engine(db_url)
+        SQLModel.metadata.create_all(self.engine)
+
         self.selected_product_code = None
         self.balance = 0
         self.monedero = Monedero([
@@ -32,14 +62,14 @@ class Maquina:
             Dinero(valor=20, cantidad=0, tipo="Billete"),
             Dinero(valor=50, cantidad=0, tipo="Billete"),
         ])
-        self.products = [
-            Product(code="A1", name="Papitas", price=15, stock=10),
-            Product(code="A2", name="Jugo de Naranja", price=20, stock=10),
-            Product(code="A3", name="Café con leche", price=35, stock=10),
-            Product(code="A4", name="Mantecadas", price=28, stock=10),
-            Product(code="B1", name="Bizcochitos", price=12, stock=1),
-            Product(code="B2", name="Gansito", price=21, stock=10)
-        ]
+        # self.products = [
+        #     Product(code="A1", name="Papitas", price=15, stock=10),
+        #     Product(code="A2", name="Jugo de Naranja", price=20, stock=10),
+        #     Product(code="A3", name="Café con leche", price=35, stock=10),
+        #     Product(code="A4", name="Mantecadas", price=28, stock=10),
+        #     Product(code="B1", name="Bizcochitos", price=12, stock=1),
+        #     Product(code="B2", name="Gansito", price=21, stock=10)
+        # ]
 
     def machine_loop(self):
         while True:
