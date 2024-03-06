@@ -2,7 +2,7 @@ import requests
 import json
 
 # Define the URL you want to send the POST request to
-url = 'http://127.0.0.1:8000/api/products/create'
+url = 'http://127.0.0.1:8000/api/products/create/'
 
 # Define the data you want to send in the POST request (if any)
 data = {

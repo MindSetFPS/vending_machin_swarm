@@ -40,6 +40,11 @@ async def vending_machines():
 async def delete_product(product_id:int):
 
     product_controller.Delete_Product(id=product_id)
+    print(product_id)
+    return{
+        "ok" : True
+    }
+
  
 # Crear un producto 
 @app.post("/api/products/create")

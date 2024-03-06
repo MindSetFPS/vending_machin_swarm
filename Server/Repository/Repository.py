@@ -40,6 +40,7 @@ class IDatabase(ABC):
     
     @abstractmethod
     def delete(self, item):
+
         raise NotImplementedError
     
 class SQLiteRepository(IDatabase):
@@ -76,7 +77,10 @@ class SQLiteRepository(IDatabase):
         pass
 
     def delete(self, item):
-        pass
+        with Session(self.engine) as session:
+            
+            session.delete(item)
+            session.commit()
 
 repository = SQLiteRepository(db_path="database.db")
 repository.connect()
