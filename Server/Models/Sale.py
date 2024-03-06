@@ -9,3 +9,5 @@ class Sale(SQLModel, table=True):
     date: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     product_id: int = Field(default=None, foreign_key="products.id")
     product: Optional[Product] = Relationship()
+ 
+    machine_id: int = Field(default=None, foreign_key="vendingmachines.id")
