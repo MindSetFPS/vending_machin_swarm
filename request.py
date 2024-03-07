@@ -7,9 +7,9 @@ def create_product(endpoint):
     # Define the URL you want to send the POST request to
     # Define the data you want to send in the POST request (if any)
     data = {
-        'name': 'Sabritas',
-        'price': '20',
-        "code" : "A2",
+        'name': 'Coca',
+        'price': '24',
+        "code" : "A3",
     }
 
     headers = {
@@ -27,7 +27,7 @@ def create_product(endpoint):
         # Print an error message if the request was unsuccessful
         print('Error:', json.dumps(response.json()))
 
-def create_sale_request(endpoint):
+def create_sale(endpoint):
         # Define the URL you want to send the POST request to
     # Define the data you want to send in the POST request (if any)
     data = {
@@ -85,6 +85,6 @@ def create_vmachine(endpoint):
 
 # create_product(endpoint="/products/create")
         
-# create_sale_request(endpoint="/sale/create")
+create_sale(endpoint="/sale/create")
         
-create_vmachine("/vendingmachine/create")
+# create_vmachine("/vendingmachine/create")

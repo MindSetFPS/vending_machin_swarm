@@ -1,4 +1,4 @@
-from Repository.Repository import IDatabase, repository
+from Server.Repository.Repository import IDatabase, repository
 
 class VendingMachineRepository:
     def __init__(self, repository: IDatabase) -> None:
@@ -13,8 +13,8 @@ class VendingMachineRepository:
     def delete(self, id):
         return self._repository.delete(id)
     
-    def create(self):
-        return self._repository.create()
+    def create(self, vending_machine):
+        return self._repository.create(vending_machine)
     
     def update(self, id):
         return self._repository.update(id)

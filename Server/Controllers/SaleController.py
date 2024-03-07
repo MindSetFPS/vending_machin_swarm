@@ -6,8 +6,8 @@ class SaleController:
     def __init__(self, sale_repository: IDatabase) -> None:
         self.sale_repository = sale_repository
 
-    def create_sale(self, product_id: int):
-        sale = Sale(product_id=product_id)
+    def create_sale(self, product_id: int, machine_id: 1):
+        sale = Sale(product_id=product_id, machine_id=machine_id)
         self.sale_repository.create(sale=sale)
 
 sale_controller = SaleController(sale_repository=sale_repository)

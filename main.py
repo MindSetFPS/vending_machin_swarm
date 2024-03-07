@@ -83,7 +83,8 @@ async def create_sale(product_id: Request): # original
 # async def create_sale(product_id: Optional[int] = None):
     r = await product_id.json()
     print(r['product_id'])
-    sale_controller.create_sale(product_id=r['product_id'])
+    print(r['machine_id'])
+    sale_controller.create_sale(product_id=r['product_id'], machine_id=r['machine_id'])
     return {
         "ok": True
     }

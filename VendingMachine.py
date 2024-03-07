@@ -11,6 +11,9 @@ class Monedero:
     def __init__(self, dinero_list):
         self.available_denominations = dinero_list
 
+    def get_available_denominations():
+        pass
+
     def received_balance_is_in_denominations(self, inserted_balance):
         denominations = [dinero.valor for dinero in self.available_denominations]
         return inserted_balance in denominations
