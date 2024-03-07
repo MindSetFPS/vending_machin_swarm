@@ -2,7 +2,9 @@ from fastapi import FastAPI, Request
 from Server.Repository.ProductRepository import product_repository
 from Server.Controllers.ProductController import product_controller
 from Server.Controllers.SaleController import sale_controller 
+from Server.Controllers.VendingMachineController import vending_machine_controller
 from Server.Models.Product import Product
+from Server.Models.VendingMachine import VendingMachine
 from typing import Optional
 import json
 
@@ -28,7 +30,14 @@ async def vending_machines():
 
 # Borrar una maquina
 
-# Crear una maquina (en el servidor) 
+# Crear una maquina (en el servidor)
+@app.post("/api/vendingmachine/create")
+async def create_vending_machine(vendingMachine: VendingMachine):
+    vending_machine_controller.create_vendingmachine()
+    print(vendingMachine.id)
+    return {
+        "ok": "True"
+    }
 
 #################################################
 
@@ -75,9 +84,9 @@ async def create_sale(product_id: Request): # original
     r = await product_id.json()
     print(r['product_id'])
     sale_controller.create_sale(product_id=r['product_id'])
-    # return {
-    #     "ok": True
-    # }
+    return {
+        "ok": True
+    }
  
 # Modificar una venta
 
