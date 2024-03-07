@@ -1,4 +1,5 @@
 env
 __pycache__
 database.db
+venv
 vending_machine_db

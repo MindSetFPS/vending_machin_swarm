@@ -51,8 +51,26 @@ async def get_all_products():
     }
 
 # Mostrar un producto 
+@app.get("/api/product/{product_id}/")
+async def get_product(product_id: int):
+    product = product_controller.get_product_by_id(product_id)
+    if product:
+        return {
+            "ok": True,
+        }
+
+
+
 
 # Modificar un producto
+@app.put("/api/product/update/{product_id}/")
+async def update_product(product_id: int, updated_product_data: dict):
+
+    product_controller.update_product(product_id, updated_product_data)
+    return {
+        "ok": True
+    }
+
 
 # Borrar un producto
 @app.post("/api/product/delete/{product_id}/")

@@ -68,8 +68,8 @@ def create_vmachine(endpoint):
     }
 
     headers = {
-        'Content-Type': 'application/json',
-    }
+            'Content-Type': 'application/json',
+        }
 
     # Send the POST request
     response = requests.post(url + endpoint, json=data, headers=headers)
@@ -83,8 +83,8 @@ def create_vmachine(endpoint):
         print('Error:', json.dumps(response.json()))
 
 
-# create_product(endpoint="/products/create")
-        
-create_sale(endpoint="/sale/create")
-        
-# create_vmachine("/vendingmachine/create")
+    # create_product(endpoint="/products/create")
+            
+    create_sale(endpoint="/sale/create")
+            
+    # create_vmachine("/vendingmachine/create")

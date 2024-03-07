@@ -24,6 +24,9 @@ class ProductController:
     def Delete_Product(self, id):
         self.product_repository.delete_by_id(id=id)
         
+    #modificar un producto
+    def update_product(self, id: int, updated_product_data: dict):
+        self.product_repository.get_by_id(id)
 
     
 

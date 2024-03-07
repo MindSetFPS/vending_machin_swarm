@@ -9,7 +9,7 @@ class ProductRepository:
         return self._repository.get_all(statement)
     
     def get_by_id(self, id):
-        return self._repository.get_by_id(id)
+        return self._repository.get_product_by_id(id)
     
     def delete(self, id):
         return self._repository.delete(id)

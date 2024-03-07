@@ -69,7 +69,9 @@ class SQLiteRepository(IDatabase):
         session.commit()
 
     def update(self, item):
-        pass
+         with Session(self.engine) as session:
+            session.merge(item)
+            session.commit()
 
     def delete(self, item):
         with Session(self.engine) as session:
