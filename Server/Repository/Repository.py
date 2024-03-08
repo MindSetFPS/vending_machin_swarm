@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
 from sqlmodel import create_engine, SQLModel, Session
 
-
 # We need to have these classes here to register them in database
 from Server.Models.Dinero import Dinero
 from Server.Models.Product import Product
 from Server.Models.Sale import Sale
-from Server.Models.VendingMachine import VendingMachine
+from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
 
 class IDatabase(ABC):
     @abstractmethod
@@ -47,7 +46,6 @@ class SQLiteRepository(IDatabase):
     
     def connect(self):
         self.engine = create_engine("sqlite:///{0}".format(self.db_path), echo=True)
-        # self.connection = self.engine.connect()
         SQLModel.metadata.create_all(self.engine)
     
     def disconnect(self):
@@ -60,7 +58,10 @@ class SQLiteRepository(IDatabase):
         return results
 
     def get_by_id(self, query): 
-        pass
+        session = Session(self.engine)
+        with session:
+            results = session.exec(statement=query).one_or_none()
+        return results
 
     def create(self, model):
         session = Session(self.engine)
@@ -70,12 +71,12 @@ class SQLiteRepository(IDatabase):
 
     def update(self, item):
          with Session(self.engine) as session:
+            session.add(item)
             session.merge(item)
             session.commit()
 
     def delete(self, item):
         with Session(self.engine) as session:
-            
             session.delete(item)
             session.commit()
 
