@@ -68,12 +68,12 @@ async def create_vending_machine(vendingMachine: VendingMachine):
     return {
         "ok": "True"
     }
+
+# Mostrar maquina con mas ventas
 @app.get("/api/vendingmachines/top_selling")
 async def get_top_selling_machines():
-    vending_machine_controller.get_top_selling_machines()
-    return {
-        "ok": "true"
-    }
+    top_selling_machines = vending_machine_controller.get_top_selling_machines()
+    return top_selling_machines
 
 #################################################
 
