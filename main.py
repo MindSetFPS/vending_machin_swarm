@@ -1,10 +1,15 @@
-from fastapi import FastAPI, Request
 from Server.Repository.ProductRepository import product_repository
+
 from Server.Controllers.ProductController import product_controller
 from Server.Controllers.SaleController import sale_controller 
 from Server.Controllers.VendingMachineController import vending_machine_controller
+from Server.Controllers.VendingMachineProductStockController import vending_machine_product_stock_controller
+
 from Server.Models.Product import Product
-from Server.Models.VendingMachine import VendingMachine
+from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
+from Server.Models.Sale import Sale
+
+from fastapi import FastAPI, Request
 from typing import Optional
 import json
 
@@ -18,31 +23,61 @@ async def root():
     }
 
 # Listar todas maquinas
-@app.get("/api/machines")
-async def vending_machines():
-    return {
-        "machines" : "true"
-    }
-
-# Listar una maquina
 
 # Modificar una maquina
+@app.post("/api/vendingmachine/update")
+async def update_vending_machine(id: int, is_on: bool):
+    vending_machine_controller.update_vending_machine(id=id, is_on=is_on)
+    return {
+        'machine' : 'true'
+    }
+
+@app.post("/api/vendingmachine/refill")
+async def refill_vending_machine(product_id: int, machine_id: int, stock: int):
+        vending_machine_product_stock_controller.refill_vending_machine(machine_id=machine_id, product_id=product_id, stock=stock)
+        # vending_machine_controller.refill_vending_machine(product_id, machine_id, stock)
+
+# Listar una maquina
+@app.get("/api/vendingmachine")
+async def get_machine(machine: Request):
+    
+    machine_json = await machine.json()
+    vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_json['id'])
+    print(vending_machine)
+    if vending_machine is None:
+        vending_machine_controller.create_vendingmachine(is_on=machine_json['is_on'])
+
+        vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_json['id'])
+
+    return {
+        'machine' : vending_machine
+    }
 
 # Borrar una maquina
+@app.delete("/api/vendingmachine/delete/{id}")
+async def delete_vending_machine(id: int):
+    vending_machine_controller.delete_vending_machine(id=id)
+    return {
+        "we": "did_something"
+    }
 
 # Crear una maquina (en el servidor)
 @app.post("/api/vendingmachine/create")
 async def create_vending_machine(vendingMachine: VendingMachine):
-    vending_machine_controller.create_vendingmachine()
-    print(vendingMachine.id)
+    vending_machine_controller.create_vendingmachine(vendingMachine)
     return {
         "ok": "True"
+    }
+@app.get("/api/vendingmachines/top_selling")
+async def get_top_selling_machines():
+    vending_machine_controller.get_top_selling_machines()
+    return {
+        "ok": "true"
     }
 
 #################################################
 
 # Listar todos los productos
-
 @app.get("/api/products")
 async def get_all_products():
     products = product_controller.get_all_products()
@@ -59,9 +94,6 @@ async def get_product(product_id: int):
             "ok": True,
         }
 
-
-
-
 # Modificar un producto
 @app.put("/api/product/update/{product_id}/")
 async def update_product(product_id: int, updated_product_data: dict):
@@ -71,7 +103,6 @@ async def update_product(product_id: int, updated_product_data: dict):
         "ok": True
     }
 
-
 # Borrar un producto
 @app.post("/api/product/delete/{product_id}/")
 async def delete_product(product_id:int):
@@ -80,11 +111,10 @@ async def delete_product(product_id:int):
     return{
         "ok" : True
     }
-
  
 # Crear un producto 
 @app.post("/api/products/create")
-async def create_product(product: Product):
+async def create_product(product: Product): # Do not send the id in the request
     product_controller.createProduct(code=product.code, name=product.name, price=product.price)
 
     return {
@@ -94,17 +124,12 @@ async def create_product(product: Product):
 #################################################
 
 # Crear una venta
-
 @app.post("/api/sale/create")
-# The AI helped me solve this lol
-async def create_sale(product_id: Request): # original
-# async def create_sale(product_id: Optional[int] = None):
-    r = await product_id.json()
-    print(r['product_id'])
-    print(r['machine_id'])
-    sale_controller.create_sale(product_id=r['product_id'], machine_id=r['machine_id'])
+async def create_sale(machine_id: int, product_id: int): # original
+    successfull = sale_controller.create_sale(product_id=product_id, machine_id=machine_id)
+
     return {
-        "ok": True
+        "success" : successfull 
     }
  
 # Modificar una venta

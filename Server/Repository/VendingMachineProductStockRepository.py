@@ -15,4 +15,10 @@ class VendingMachineProductStockRepository:
     def update(self, statement):
         repository.update(item=statement)
 
+    def get_all(self, query):
+        return repository.get_all(statement=query)
+    
+    def create(self, statement):
+        repository.create(statement)    
+
 vending_machine_product_stock_repository = VendingMachineProductStockRepository(repository=repository)

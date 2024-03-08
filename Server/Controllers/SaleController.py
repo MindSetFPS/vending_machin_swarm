@@ -16,9 +16,7 @@ class SaleController:
         print('v')
         print(v)
 
-        if v.stock <= 0:
-            return False
-        else:   
+        if v is not None and v.stock > 0:
             sale = Sale(product_id=product_id, machine_id=machine_id)
             self.sale_repository.create(sale=sale)
 
@@ -26,7 +24,8 @@ class SaleController:
                 machine_id=machine_id, 
                 product_id=product_id,
             )
-
             return True
+        else:   
+            return False
 
 sale_controller = SaleController(sale_repository=sale_repository)

@@ -1,6 +1,7 @@
-from Server.Models.VendingMachine import VendingMachine
+from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
 from Server.Repository.Repository import IDatabase
 from Server.Repository.VendingMachineRepository import vending_machine_repository
+from Server.Controllers.VendingMachineProductStockController import vending_machine_product_stock_controller
 from sqlmodel import select
 
 class VendingMachineController:
@@ -32,5 +33,10 @@ class VendingMachineController:
     def delete_vending_machine(self, id):
         print(f'Deleting vending machine with id {id}')
         self.repository.delete(id=id)
+
+    def get_top_selling_machines(self):
+        machines = select(VendingMachineProductsLink).group_by(VendingMachineProductsLink.machine_id)
+        machines_group = vending_machine_product_stock_controller.get_all(machines)
+        print(machines_group)
 
 vending_machine_controller = VendingMachineController(vending_machine_repository=vending_machine_repository)
