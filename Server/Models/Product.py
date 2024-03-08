@@ -1,5 +1,6 @@
-from typing import Optional
-from sqlmodel import Field, SQLModel
+from typing import Optional, List
+from sqlmodel import Field, SQLModel, Relationship
+from Server.Models.VendingMachine import VendingMachineProductsLink
 
 class Product(SQLModel, table=True):
     def __init__(self, name: str, price: float, code: str ):
@@ -12,6 +13,7 @@ class Product(SQLModel, table=True):
     name: str
     price: float
     code: str
+    vending_machines: List["VendingMachine"] = Relationship(back_populates="products", link_model=VendingMachineProductsLink)
 
     def clone(self):
         return self
