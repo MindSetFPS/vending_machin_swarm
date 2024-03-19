@@ -54,6 +54,11 @@ class VendingMachineController:
             print(sorted_machines_list)
 
         return sorted_machines_list
+    
+    def get_all(self):
+        machines = select(VendingMachine)
+
+        return self.repository.get_all(machines)
             
 
 

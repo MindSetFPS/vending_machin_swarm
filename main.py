@@ -15,6 +15,7 @@ import json
 
 app = FastAPI()
 
+
 @app.get("/")
 async def root():
     product_repository.get_all_items()
@@ -23,6 +24,12 @@ async def root():
     }
 
 # Listar todas maquinas
+@app.get("/api/vendingmachine/all")
+async def get_all_vending_machines():
+    print('/api/vendingmachine/all')
+    v = vending_machine_controller.get_all()
+    print(v)
+    return v
 
 # Modificar una maquina
 @app.post("/api/vendingmachine/update")
