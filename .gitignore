@@ -3,3 +3,5 @@ __pycache__
 database.db
 venv
 vending_machine_db
+node_modules
+.next
