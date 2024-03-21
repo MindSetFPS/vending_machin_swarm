@@ -1,6 +1,19 @@
 'use client'
 
+import { Button, Link } from "@nextui-org/react"
+
 export default function Page({ params }){
    
-    return <p> Machine: {params.id}</p>
+    return (
+        <>
+            <p> Machine: {params.id}</p>
+            <Button
+                as={Link}
+                href="/assign-products"
+            >
+                Asignar Productos
+            </Button>
+        </>
+        
+    )
 }

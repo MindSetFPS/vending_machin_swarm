@@ -29,7 +29,7 @@ export default async function Product(){
                     {data.products.map((e) => (
                         <Link key={e.id} href={`/products/${e.id}`} >
                             <div className="outline m-2 p-2 rounded-lg outline-2 outline-gray-200  shadow-md hover:shadow-lg transition-all block w-full">
-                                Maquina {e.id}
+                                Product {e.id}
                             </div>
                         </Link>
                     ))}

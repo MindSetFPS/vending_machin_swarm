@@ -1,15 +1,34 @@
 // 'use client'
 
-async function getProduct(id) {
-    const response = await fetch(`${process.env.BACKEND_URL}/api/product/${id}`, { cache : 'no-store'})
-    if(!response.ok) {
-        throw new Error('Error fetchging')
-    }
-}
+import { getProduct } from "@/Product/ProductController"
+import Subtitle from "@/components/Subtitle"
 
 export default async function Page({ params }){
     const product = await getProduct(params.id)
 
-    console.log(product)
-    return <p> Product: {params.id}</p>
+    return (
+        <>
+        { 
+            product != undefined ? 
+            <div>
+                <Subtitle>
+                    Price: ${product.price}
+                </Subtitle>
+                <Subtitle>
+                    Product name: {product.name} -
+                </Subtitle>
+                <Subtitle>
+                    Code: {product.code} - 
+                </Subtitle>
+                <Subtitle>
+                    ID: {product.id}
+                </Subtitle>
+            </div> 
+            :
+            'Product does not exist.'
+        }
+    
+        </>
+    )
+
 }
