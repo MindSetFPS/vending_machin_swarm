@@ -18,7 +18,6 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    product_repository.get_all_items()
     return {
         "message" : "Hello World"
     }
@@ -95,7 +94,7 @@ async def get_all_products():
 # Mostrar un producto 
 @app.get("/api/product/{product_id}/")
 async def get_product(product_id: int):
-    product = product_controller.get_product_by_id(product_id)
+    product = product_controller.getProductById(product_id)
     if product:
         return {
             "ok": True,
