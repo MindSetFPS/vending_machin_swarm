@@ -15,7 +15,6 @@ import json
 
 app = FastAPI()
 
-
 @app.get("/")
 async def root():
     return {
@@ -96,9 +95,7 @@ async def get_all_products():
 async def get_product(product_id: int):
     product = product_controller.getProductById(product_id)
     if product:
-        return {
-            "ok": True,
-        }
+        return product
 
 # Modificar un producto
 @app.put("/api/product/update/{product_id}/")
