@@ -32,6 +32,9 @@ class VendingMachineProductStockLinkController:
 
         self.repository.update(stock)
 
+    def get_products_by_machine_id(self, machine_id: int):
+        return vending_machine_product_stock_repository.get_products_by_machine_id(machine_id=machine_id)
+
 vending_machine_product_stock_controller = VendingMachineProductStockLinkController(
     vending_machine_product_stock_link_repository=vending_machine_product_stock_repository
 )

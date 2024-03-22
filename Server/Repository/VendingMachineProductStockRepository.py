@@ -19,6 +19,13 @@ class VendingMachineProductStockRepository:
         return repository.get_all(statement=query)
     
     def create(self, statement):
-        repository.create(statement)    
+        repository.create(statement)
+
+    def get_products_by_machine_id(self, machine_id: int):
+        statement = select(VendingMachineProductsLink).where(
+            VendingMachineProductsLink.machine_id == machine_id
+        )
+
+        return self._repository.get_all(statement=statement)
 
 vending_machine_product_stock_repository = VendingMachineProductStockRepository(repository=repository)

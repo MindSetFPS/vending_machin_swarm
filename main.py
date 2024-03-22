@@ -37,6 +37,7 @@ async def update_vending_machine(id: int, is_on: bool):
         'machine' : 'true'
     }
 
+# Rellenar una maquina
 @app.post("/api/vendingmachine/refill")
 async def refill_vending_machine(product_id: int, machine_id: int, stock: int):
         vending_machine_product_stock_controller.refill_vending_machine(machine_id=machine_id, product_id=product_id, stock=stock)
@@ -142,3 +143,17 @@ async def create_sale(machine_id: int, product_id: int): # original
 # Leer una venta
 
 # Leer todas las ventas
+
+# Obtener los productos de una maquina
+@app.get("/api/vendingmachine/{id}/products")
+async def get_products_by_vending_machine(machine_id: int):
+    vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_id)
+
+    if not vending_machine:
+        return {
+            "error" : "No such vending machine"
+        }
+    
+    vending_machine_products_list = vending_machine_product_stock_controller.get_products_by_machine_id(machine_id=machine_id)
+
+    return vending_machine_products_list
