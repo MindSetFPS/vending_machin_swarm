@@ -1,16 +1,46 @@
 import { Product } from "@/Product/Product"
-import { Link } from "@nextui-org/react"
+import { Button } from "@nextui-org/react"
 
-
-export default function ProductList(products: Array<Product>) {
-
-    // console.log("p: ", products.products)
+interface ProductProp {
+    product: Product
+}
+export function ProductItem(product: ProductProp) {
     return (
         <>
-            {products.products.map((e) => (
-                    <div key={e.id}  className="outline m-2 p-2 rounded-lg outline-2 outline-gray-200  shadow-md hover:shadow-lg transition-all block w-full">
-                        Product {e.id}
+            <div className="flex justify-between content-center align-middle items-center outline m-2 p-2 rounded-lg outline-2 outline-gray-200  shadow-md hover:shadow-lg transition-all w-full">
+
+                <div>
+                    <div>
+                        Nombre: {product.product.name}
                     </div>
+                    <div>
+                        Id: {product.product.id}
+                    </div>
+                    <div>
+                        ${product.product.price}
+                    </div>
+                    <div>
+                        Code: {product.product.code}
+                    </div>
+                </div>
+                <Button size="md" variant="faded"> Agregar {product.product.id} </Button>
+            </div>
+        </>
+    )
+}
+
+interface ProducListProps {
+    products: Product[]
+}
+
+// https://stackoverflow.com/questions/69885310/typescript-error-type-type-is-not-assignable-to-type-intrinsicattributes
+export default function ProductList(products: ProducListProps) {
+    return (
+        <>
+            {products.products.map((product: Product) => (
+
+                <ProductItem key={product.id} product={product} ></ProductItem>
+
             ))}
         </>
     )
