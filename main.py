@@ -21,6 +21,14 @@ async def root():
         "message" : "Hello World"
     }
 
+# Listar todas maquinas
+@app.get("/api/vendingmachine/all")
+async def get_all_vending_machines():
+    print('/api/vendingmachine/all')
+    v = vending_machine_controller.get_all()
+    print(v)
+    return v
+
 # Listar una maquina
 @app.get("/api/vendingmachine/{id}")
 async def get_machine(machine_id: int):
@@ -50,13 +58,7 @@ async def get_products_by_vending_machine(machine_id: int):
     return vending_machine_products_list
 
 
-# Listar todas maquinas
-@app.get("/api/vendingmachine/all")
-async def get_all_vending_machines():
-    print('/api/vendingmachine/all')
-    v = vending_machine_controller.get_all()
-    print(v)
-    return v
+
 
 # Modificar una maquina
 @app.post("/api/vendingmachine/update")
