@@ -10,7 +10,7 @@ from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsL
 from Server.Models.Sale import Sale
 
 from fastapi import FastAPI, Request
-from typing import Optional
+from typing import List
 import json
 
 app = FastAPI()
@@ -20,6 +20,35 @@ async def root():
     return {
         "message" : "Hello World"
     }
+
+# Listar una maquina
+@app.get("/api/vendingmachine/{id}")
+async def get_machine(machine_id: int):
+    
+    vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_id)
+    print(vending_machine)
+    if vending_machine is None:
+        return {
+            "result" : "Vending Machine not found."
+        }
+
+    return {
+        'machine' : vending_machine
+    }
+
+# Obtener los productos de una maquina
+@app.get("/api/vendingmachine/{id}/products")
+async def get_products_by_vending_machine(machine_id: int):
+    vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_id)
+
+    if not vending_machine:
+        return {
+            "error" : "No such vending machine"
+        }
+    
+    vending_machine_products_list = vending_machine_product_stock_controller.get_products_by_machine_id(machine_id=machine_id)
+    return vending_machine_products_list
+
 
 # Listar todas maquinas
 @app.get("/api/vendingmachine/all")
@@ -39,24 +68,27 @@ async def update_vending_machine(id: int, is_on: bool):
 
 # Rellenar una maquina
 @app.post("/api/vendingmachine/refill")
-async def refill_vending_machine(product_id: int, machine_id: int, stock: int):
+async def refill_vending_machine(product_id: int, machine_id: int, stock: int = 0):
         vending_machine_product_stock_controller.refill_vending_machine(machine_id=machine_id, product_id=product_id, stock=stock)
-        # vending_machine_controller.refill_vending_machine(product_id, machine_id, stock)
 
-# Listar una maquina
-@app.get("/api/vendingmachine")
-async def get_machine(machine: Request):
+# Asignar productos a una maquina
+@app.post("/api/vendingmachine/assign")
+async def assign_products_to_vending_machine(products: List[int], machine_id: int):
+
+    for product_id in products:
+        vending_machine_product_stock_controller.refill_vending_machine(machine_id=machine_id, product_id=product_id, stock=0)
     
-    machine_json = await machine.json()
-    vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_json['id'])
-    print(vending_machine)
-    if vending_machine is None:
-        vending_machine_controller.create_vendingmachine(is_on=machine_json['is_on'])
-
-        vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_json['id'])
-
     return {
-        'machine' : vending_machine
+        "ok": True
+    }
+
+
+# Crear una maquina (en el servidor)
+@app.post("/api/vendingmachine/create")
+async def create_vending_machine(vendingMachine: VendingMachine):
+    vending_machine_controller.create_vendingmachine(vendingMachine)
+    return {
+        "ok": "True"
     }
 
 # Borrar una maquina
@@ -65,14 +97,6 @@ async def delete_vending_machine(id: int):
     vending_machine_controller.delete_vending_machine(id=id)
     return {
         "we": "did_something"
-    }
-
-# Crear una maquina (en el servidor)
-@app.post("/api/vendingmachine/create")
-async def create_vending_machine(vendingMachine: VendingMachine):
-    vending_machine_controller.create_vendingmachine(vendingMachine)
-    return {
-        "ok": "True"
     }
 
 # Mostrar maquina con mas ventas
@@ -144,16 +168,3 @@ async def create_sale(machine_id: int, product_id: int): # original
 
 # Leer todas las ventas
 
-# Obtener los productos de una maquina
-@app.get("/api/vendingmachine/{id}/products")
-async def get_products_by_vending_machine(machine_id: int):
-    vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_id)
-
-    if not vending_machine:
-        return {
-            "error" : "No such vending machine"
-        }
-    
-    vending_machine_products_list = vending_machine_product_stock_controller.get_products_by_machine_id(machine_id=machine_id)
-
-    return vending_machine_products_list
