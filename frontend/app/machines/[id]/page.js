@@ -9,7 +9,7 @@ export default function Page({ params }){
             <p> Machine: {params.id}</p>
             <Button
                 as={Link}
-                href="/assign-products"
+                href={`/assign-products/${params.id}`}
             >
                 Asignar Productos
             </Button>
