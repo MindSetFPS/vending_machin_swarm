@@ -8,7 +8,7 @@ class VendingMachineProductStockRepository:
 
     def get_by_id(self, machine_id, product_id) -> VendingMachineProductsLink:
         statement = select(VendingMachineProductsLink).where(
-            VendingMachineProductsLink.machine_id == machine_id and VendingMachineProductsLink.product_id == product_id
+            VendingMachineProductsLink.machine_id == machine_id, VendingMachineProductsLink.product_id == product_id
         )
         return self._repository.get_by_id(statement)
     
