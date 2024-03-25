@@ -1,19 +1,11 @@
 import Title from "@/components/Title"
 import { Button, Link } from "@nextui-org/react"
 
-async function getData() {
-    const res = await fetch('http://localhost:7777/api/vendingmachine/all', { cache: "no-store" })
-
-    if (!res.ok) {
-        throw new Error('Failed to fetch data')
-    }
-
-    return await res.json()
-}
+import { getVendingMachines } from "@/VendingMachine/VendingMachineController"
 
 export default async function Machines() {
 
-    const data = await getData()
+    const data = await getVendingMachines()
 
     console.log(data)
 
