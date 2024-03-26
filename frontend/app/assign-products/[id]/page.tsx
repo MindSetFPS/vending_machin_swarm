@@ -35,7 +35,7 @@ export default function Page({ params }) {
 
             {
                 products != undefined && products.length > 0 ?
-                    <ProductList products={products} />
+                    <ProductList products={products} vendingMachineId={params.id} />
                     :
                     'No hay productos.'
             }

@@ -25,3 +25,16 @@ export function getVendingMachines(): Promise<VendingMachine[]> {
         }))
         
 }
+
+export function assigntProductsToVendingMachine(productIdList: number[], machineId: number) {
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/vendingmachine/assign/${machineId}`
+
+    return fetch(url, {
+        cache: 'no-store',
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productIdList)
+    })
+}
