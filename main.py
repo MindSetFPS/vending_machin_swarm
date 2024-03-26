@@ -90,9 +90,8 @@ async def refill_vending_machine(product_id: int, machine_id: int, stock: int = 
         vending_machine_product_stock_controller.refill_vending_machine(machine_id=machine_id, product_id=product_id, stock=stock)
 
 # Asignar productos a una maquina
-@app.post("/api/vendingmachine/assign")
+@app.post("/api/vendingmachine/assign/{machine_id}")
 async def assign_products_to_vending_machine(products: List[int], machine_id: int):
-
     for product_id in products:
         vending_machine_product_stock_controller.refill_vending_machine(machine_id=machine_id, product_id=product_id, stock=0)
     
