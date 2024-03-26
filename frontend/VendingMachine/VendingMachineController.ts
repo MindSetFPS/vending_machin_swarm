@@ -11,7 +11,7 @@ import { VendingMachine } from "./VendingMachine";
 // }
 
 export function getVendingMachines(): Promise<VendingMachine[]> {
-    const url = `${process.env.BACKEND_URL}/api/vendingmachine/all`
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/vendingmachine/all`
 
     return fetch(url, { cache: 'no-store'})
         .then((response) => response.json())

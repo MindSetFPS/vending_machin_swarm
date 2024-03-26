@@ -2,7 +2,7 @@ import { Product } from "./Product"
 
 // Get a single product from the API
 export const getProduct = (id: number): Promise<Product> => {
-    const url = `${process.env.BACKEND_URL}/api/product/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/product/${id}`;
     return fetch(url, { cache: 'no-store' })
         .then((response) => response.json())
         .then((data) => {
@@ -18,7 +18,8 @@ export const getProduct = (id: number): Promise<Product> => {
 
 // Get all products from API
 export const getProducts = (): Promise<Product[]> => {
-    const url = `${process.env.BACKEND_URL}/api/products`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`;
+    
     return fetch(url, { cache: 'no-store' })
         .then((response) => response.json())
         .then((data) => data.products.map((productData) => { 
