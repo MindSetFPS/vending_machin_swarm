@@ -24,4 +24,8 @@ class SaleRepository:
     def update(self, id):
         return self._repository.update(id)
     
+    def get_sales_by_machine_id(self, machine_id:int):
+        statement = select(Sale).where(Sale.machine_id == machine_id)
+        return self._repository.get_all(statement=statement)
+    
 sale_repository = SaleRepository(repository=repository)

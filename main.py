@@ -192,3 +192,8 @@ async def get_sale(sale_id: int):
 async def get_sales():
     sales = sale_controller.get_sales()
     return sales
+
+@app.get("/api/sales/machine/{machine_id}")
+async def get_sales_by_machine_id(machine_id: int):
+    sales = sale_controller.get_sales_by_machine_id(machine_id=machine_id)
+    return sales

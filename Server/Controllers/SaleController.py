@@ -35,5 +35,9 @@ class SaleController:
     def get_sales(self):
         sales = self.sale_repository.get_all()
         return sales
+    
+    def get_sales_by_machine_id(self, machine_id: int):
+        sales = self.sale_repository.get_sales_by_machine_id(machine_id=machine_id)
+        return sales
 
 sale_controller = SaleController(sale_repository=sale_repository)
