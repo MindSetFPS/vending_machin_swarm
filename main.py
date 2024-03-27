@@ -181,7 +181,14 @@ async def create_sale(machine_id: int, product_id: int): # original
 
 # Borrar una venta
 
-# Leer una venta
+# Obtener una venta
+@app.get("/api/sale/{sale_id}")
+async def get_sale(sale_id: int):
+    sale = sale_controller.get_sale_by_id(sale_id=sale_id)
+    return sale
 
 # Leer todas las ventas
-
+@app.get("/api/sales")
+async def get_sales():
+    sales = sale_controller.get_sales()
+    return sales

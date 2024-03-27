@@ -81,4 +81,4 @@ class SQLiteRepository(IDatabase):
             session.commit()
 
 repository = SQLiteRepository(db_path="database.db")
-repository.connect()
+# repository.connect()

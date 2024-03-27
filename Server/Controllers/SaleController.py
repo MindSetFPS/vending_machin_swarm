@@ -27,5 +27,13 @@ class SaleController:
             return True
         else:   
             return False
+        
+    def get_sale_by_id(self, sale_id: int):
+        sale = self.sale_repository.get_by_id(id=sale_id)
+        return sale
+    
+    def get_sales(self):
+        sales = self.sale_repository.get_all()
+        return sales
 
 sale_controller = SaleController(sale_repository=sale_repository)
