@@ -66,6 +66,10 @@ class SQLiteRepository(IDatabase):
 
     def get_by_id(self, query): 
         pass
+    
+    def show_product(self, product_id):
+    with Session(self.engine) as session:
+        product = session.query(Product).filter_by(id=product_id).first()
 
     def create(self, product):
         session = Session(self.engine)
