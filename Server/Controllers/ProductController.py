@@ -14,7 +14,7 @@ class ProductController:
         return self.product_repository.get_all(statement)
     
     def getProductById(self, id: int):
-        self.product_repository.get_by_id(id=id)
+        return self.product_repository.get_by_id(id=id)
 
     def createProduct(self, name: str, price: float, code: str):
         product = Product(name=name, price=price, code=code)
@@ -24,6 +24,9 @@ class ProductController:
     def Delete_Product(self, id):
         self.product_repository.delete_by_id(id=id)
         
+    #modificar un producto
+    def update_product(self, id: int, updated_product_data: dict):
+        self.product_repository.get_by_id(id)
 
     
 

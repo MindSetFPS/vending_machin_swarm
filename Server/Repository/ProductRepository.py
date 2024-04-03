@@ -1,5 +1,7 @@
 # from Repository.Repository import IDatabase, repository
 from Server.Repository.Repository import IDatabase, repository
+from sqlmodel import select
+from Server.Models.Product import Product
 
 class ProductRepository:
     def __init__(self, repository: IDatabase) -> None:
@@ -9,7 +11,8 @@ class ProductRepository:
         return self._repository.get_all(statement)
     
     def get_by_id(self, id):
-        return self._repository.get_by_id(id)
+        statement = select(Product).where(Product.id == id)
+        return self._repository.get_by_id(statement)
     
     def delete(self, id):
         return self._repository.delete(id)
