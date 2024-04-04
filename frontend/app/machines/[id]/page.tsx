@@ -1,15 +1,16 @@
 'use client'
 
 import { Button, Link } from "@nextui-org/react"
-import { Sale } from "@/Sale/Sale"
 
 import { useEffect, useState } from "react"
 
 import { getMachineSales } from "@/Sale/SaleController"
+import { Sale } from "@/Sale/Sale"
+import { SaleResponse } from "@/Sale/SaleResponse"
 
 export default function Page({ params }){
    
-    const [ sales, setSales ] = useState<Sale[]>([])
+    const [ sales, setSales ] = useState<SaleResponse[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,9 +18,7 @@ export default function Page({ params }){
         }
 
         fetchData().catch( (error) => {
-            console.error((error) => {
-                console.error(error)
-            })
+            console.error(error) 
         })
 
     }, [])
@@ -39,9 +38,10 @@ export default function Page({ params }){
                 {
                     sales && sales.length > 0 ? 
                     <div>{sales.map((sale) => (
-                        <div key={sale.id}> 
-                            <div>{sale.id}</div>
+                        <div key={sale.id} className="outline outline-2 outline-slate-300 rounded-lg p-2 mt-4 bg-slate-50 hover:shadow-xl transition" > 
+                            <div>{sale.product.name}</div>
                             <div>Fecha: {new Date(sale.date).toLocaleString()}</div>
+                            <div>${sale.product.price}</div>
                         </div>
                     ))}</div>
                     :
