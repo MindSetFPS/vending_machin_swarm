@@ -198,9 +198,18 @@ async def get_sales():
 async def get_sales_by_machine_id(machine_id: int):
     sales = sale_controller.get_sales_by_machine_id(machine_id=machine_id)
     sales_json = [] 
-    for x in sales:
+    for sale, product in sales:
+
         sales_json.append({
-            "sale": x[0],
-            "product": x[1]
+            "sale": {
+                "id": sale.id,
+                "machine_id": sale.machine_id,
+                "date": sale.date,
+                "product": {
+                    "id": product.id,
+                    "name": product.name,
+                    "price": product.price #Note: make price in a per machine basis
+                }
+            }
         })
     return sales_json

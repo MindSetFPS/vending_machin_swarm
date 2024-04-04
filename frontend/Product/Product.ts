@@ -2,5 +2,5 @@ export class Product {
     id: number;
     name: string;
     price: number;
-    code: string
+    code?: string
 }
