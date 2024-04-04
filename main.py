@@ -193,7 +193,14 @@ async def get_sales():
     sales = sale_controller.get_sales()
     return sales
 
+# Obtener ventas por maquina
 @app.get("/api/sales/machine/{machine_id}")
 async def get_sales_by_machine_id(machine_id: int):
     sales = sale_controller.get_sales_by_machine_id(machine_id=machine_id)
-    return sales
+    sales_json = [] 
+    for x in sales:
+        sales_json.append({
+            "sale": x[0],
+            "product": x[1]
+        })
+    return sales_json

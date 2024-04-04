@@ -2,6 +2,7 @@
 from Server.Repository.Repository import IDatabase, repository
 from sqlmodel import select
 from Server.Models.Sale import Sale
+from Server.Models.Product import Product
 
 class SaleRepository:
     def __init__(self, repository: IDatabase) -> None:
@@ -25,7 +26,7 @@ class SaleRepository:
         return self._repository.update(id)
     
     def get_sales_by_machine_id(self, machine_id:int):
-        statement = select(Sale).where(Sale.machine_id == machine_id)
+        statement = select(Sale, Product).join(Product).where(Sale.machine_id == machine_id)
         return self._repository.get_all(statement=statement)
     
 sale_repository = SaleRepository(repository=repository)
