@@ -19,16 +19,22 @@ export const getProduct = (id: number): Promise<Product> => {
 // Get all products from API
 export const getProducts = (): Promise<Product[]> => {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`;
-    
+
     return fetch(url, { cache: 'no-store' })
         .then((response) => response.json())
-        .then((data) => data.products.map((productData) => { 
-            let product = new Product()
-            product.code = productData.code
-            product.id = productData.id
-            product.name = productData.name
-            product.price = productData.price
+        .then((data) => {    
+            return data.products.map((productData) => {
+                let product = new Product()
+                product.code = productData.code
+                product.id = productData.id
+                product.name = productData.name
+                product.price = productData.price
 
-            return product
-        }));
+                return product
+            })}
+        )
+        .catch((error) => {
+            console.error(error)
+            return []
+        })
 };

@@ -12,8 +12,15 @@ export default async function Product(){
             </div>
 
             {
-                data.products == 0 ? 
-                'No products' 
+                data.length == 0 ? 
+                <>
+                <Button
+                    href="/products/create"
+                    as={Link}
+                    color="primary"
+                >Crear un producto</Button>
+                </>
+
                 : 
                 <div>
                     {data.map((e) => (
