@@ -7,13 +7,26 @@ export default async function Machines() {
 
     const data = await getVendingMachines()
 
-    console.log(data)
+    console.log("data: ", data.length)
 
     return (
         <>
-
             {
-                data.lenght == 0 ?
+                data && data.lenght == 0 ?
+                    <>
+                        <Title>
+                            Lista de maquinas
+                        </Title>
+                        {data.map((e) => (
+                            <Link key={e.id} href={`/machines/${e.id}`} >
+                                <div className="outline m-2 p-2 rounded-lg outline-2 outline-gray-200  shadow-md hover:shadow-lg transition-all block w-full">
+                                    Maquina {e.id}
+                                </div>
+                            </Link>
+                        ))}
+                    </>
+                    :
+
                     <>
                         <Title>
                             No hay maquinas
@@ -26,21 +39,9 @@ export default async function Machines() {
                             Crear una maquina
                         </Button>
                     </>
-                    :
-                    <>
-                        <Title>
-                            Lista de maquinas
-                        </Title>
-                    </>
+
             }
 
-            {data.map((e) => (
-                <Link key={e.id} href={`/machines/${e.id}`} >
-                    <div className="outline m-2 p-2 rounded-lg outline-2 outline-gray-200  shadow-md hover:shadow-lg transition-all block w-full">
-                        Maquina {e.id}
-                    </div>
-                </Link>
-            ))}
 
         </>
     )

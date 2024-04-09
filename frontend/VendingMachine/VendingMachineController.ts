@@ -13,17 +13,31 @@ import { VendingMachine } from "./VendingMachine";
 export function getVendingMachines(): Promise<VendingMachine[]> {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/vendingmachine/all`
 
-    return fetch(url, { cache: 'no-store'})
+    return fetch(url, { cache: 'no-store' })
         .then((response) => response.json())
-        .then((data) => data.map((vendingMachineData) => {
-            let vendingMachine = new VendingMachine()
-            vendingMachine.id = vendingMachineData.id
-            vendingMachine.is_on = vendingMachineData.is_on
-            vendingMachine.products = []
+        .then((data) => {
+            let vms: VendingMachine[] = []
 
-            return vendingMachine
-        }))
-        
+            if (Array.isArray(data) && data.length > 0) {
+
+                vms = data.map((vendingMachineData) => {
+                    console.log(vendingMachineData)
+                    let vendingMachine = new VendingMachine()
+                    vendingMachine.id = vendingMachineData.id
+                    vendingMachine.is_on = vendingMachineData.is_on
+                    vendingMachine.products = []
+
+                    return vendingMachine
+                })
+            }
+
+            console.log(vms)
+            return vms
+        })
+        .catch((e) => {
+            console.error(e)
+            return []
+        })
 }
 
 export function assigntProductsToVendingMachine(productIdList: number[], machineId: number) {
@@ -32,7 +46,7 @@ export function assigntProductsToVendingMachine(productIdList: number[], machine
     return fetch(url, {
         cache: 'no-store',
         method: 'POST',
-        headers:{
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(productIdList)
