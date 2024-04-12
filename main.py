@@ -61,7 +61,7 @@ async def get_machine(machine_id: int):
     }
 
 # Obtener los productos de una maquina
-@app.get("/api/vendingmachine/{id}/products")
+@app.get("/api/vendingmachine/{machine_id}/products")
 async def get_products_by_vending_machine(machine_id: int):
     vending_machine = vending_machine_controller.get_vending_machine_by_id(id=machine_id)
 
