@@ -1,15 +1,18 @@
 # from Repository.Repository import IDatabase, repository
 from Server.Repository.Repository import IDatabase, repository
+from sqlmodel import select
+from Server.Models.Product import Product
 
 class ProductRepository:
     def __init__(self, repository: IDatabase) -> None:
         self._repository = repository
     
-    def get_all_items(self):
-        return self._repository.get_all("SELECT * FROM products")
+    def get_all(self, statement):
+        return self._repository.get_all(statement)
     
     def get_by_id(self, id):
-        return self._repository.get_product_by_id(id)
+        statement = select(Product).where(Product.id == id)
+        return self._repository.get_by_id(statement)
     
     def delete(self, id):
         return self._repository.delete(id)
