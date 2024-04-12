@@ -86,8 +86,9 @@ async def update_vending_machine(id: int, is_on: bool):
 
 # Rellenar una maquina
 @app.post("/api/vendingmachine/refill")
-async def refill_vending_machine(product_id: int, machine_id: int, stock: int = 0):
-        vending_machine_product_stock_controller.refill_vending_machine(machine_id=machine_id, product_id=product_id, stock=stock)
+async def refill_vending_machine(vending_machine_stock: VendingMachineProductsLink):
+        print(type(vending_machine_stock.stock))
+        vending_machine_product_stock_controller.refill_vending_machine(machine_id=vending_machine_stock.machine_id, product_id=vending_machine_stock.product_id, stock=int(vending_machine_stock.stock))
 
 # Asignar productos a una maquina
 @app.post("/api/vendingmachine/assign/{machine_id}")

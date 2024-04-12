@@ -6,7 +6,7 @@ import { Link } from "@nextui-org/react"
 import React, { useState, useEffect } from "react";
 
 import { getVendingMachines } from "@/VendingMachine/VendingMachineController"
-import CreateMachineModal from "@/components/CreateMachine";
+import CreateMachineModal from "@/components/CreateMachineModal";
 import { VendingMachine } from "@/VendingMachine/VendingMachine";
 
 
