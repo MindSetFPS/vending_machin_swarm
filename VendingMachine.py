@@ -4,131 +4,130 @@ from Server.Models.Sale import Sale
 from Server.Models.VendingMachine import VendingMachine
 import time, os, random
 import requests
-
 from sqlmodel import Field, SQLModel, create_engine
+from Server.Models.Dinero import Dinero
+from Server.Models.Product import Product
+from Server.Models.Sale import Sale
+from Server.Models.VendingMachine import VendingMachine
+import time, os, random
+import requests
+from sqlmodel import Field, SQLModel, create_engine
+import tkinter as tk
+from tkinter import messagebox
+import requests
+
+class Product:
+    def __init__(self, code, name, price, stock):
+        self.code = code
+        self.name = name
+        self.price = price
+        self.stock = stock
 
 class Monedero:
-    def __init__(self, dinero_list):
-        self.available_denominations = dinero_list
+    def __init__(self, machine_id, base_url):
+        self.machine_id = machine_id
+        self.api = VendingMachineAPI(base_url)
+        self.available_denominations = []
 
-    def get_available_denominations():
-        pass
-
-    def received_balance_is_in_denominations(self, inserted_balance):
-        denominations = [dinero.valor for dinero in self.available_denominations]
-        return inserted_balance in denominations
-    def total_money(self):
-        return sum(d.valor * d.cantidad for d in self.available_denominations)
-
-    def can_give_change(self, price, balance):
-        # Lógica para dar cambio
-        return True 
+    def get_all_products(self):
+        products = self.api.get_products_by_id(self.machine_id)
+        if products:
+            product_objects = [Product(**product) for product in products]
+            return product_objects
+        else:
+            print('Error: La lista de productos está vacía')
+            return []
 
 class Maquina:
-    def __init__(self, id: int = None):
-        # Managing data locally in machines:
-        #   1. get and id via instantiation
-        #   2. if id, search for the named folder
-        #   3. if no id, create folder with db
-        # self.SelectedProductCode = SelectedProductCode
-        # self.balance = balance
+    def __init__(self, root, id, base_url):
+        self.id = id 
+        self.root = root
+        self.root.title("Máquina Expendedora")
         
-        if id is not None:
-            self.id = id
-        else:
-            self.id = random.randint(0, 100000)
-
-        folder_exists = False
-
-        for f in os.listdir(os.getcwd()):
-            print(os.path.join("vending_machine_db", f))
-            if os.path.join("vending_machine_db", f) == os.path.join("vending_machine_db", str(int)):
-                folder_exists = True
-                print(folder_exists)
-                break
+        self.selected_product = None
+        self.balance = ""  # Inicializar como una cadena vacía
         
-        if folder_exists == False:
-            os.makedirs("vending_machine_db", exist_ok=True)
+        self.monedero = Monedero(id, base_url)
+        
+        self.create_widgets()
 
-        file_url = os.path.join("vending_machine_db", str(self.id) + ".db")
-        db_url = f"sqlite:///{file_url}" 
-        self.engine = create_engine(db_url)
-        SQLModel.metadata.create_all(self.engine)
-
-        self.selected_product_code = None
-        self.balance = 0
-        self.monedero = Monedero([
-            Dinero(valor=1, cantidad=50, tipo="Moneda"),
-            Dinero(valor=2, cantidad=50, tipo="Moneda"),
-            Dinero(valor=5, cantidad=50, tipo="Moneda"),
-            Dinero(valor=10, cantidad=0, tipo="Moneda"),
-            Dinero(valor=20, cantidad=0, tipo="Billete"),
-            Dinero(valor=50, cantidad=0, tipo="Billete"),
-        ])
-        # self.products = [
-        #     Product(code="A1", name="Papitas", price=15, stock=10),
-        #     Product(code="A2", name="Jugo de Naranja", price=20, stock=10),
-        #     Product(code="A3", name="Café con leche", price=35, stock=10),
-        #     Product(code="A4", name="Mantecadas", price=28, stock=10),
-        #     Product(code="B1", name="Bizcochitos", price=12, stock=1),
-        #     Product(code="B2", name="Gansito", price=21, stock=10)
-        # ]
-
-    def machine_loop(self):
-        while True:
-            self.show_products()
-            self.verify_selected_product_code()
-            time.sleep(6)
-            self.clear_console()
-
-    def show_products(self):
-        accepts = "Acepta denominacion de "
-        for dinero in self.monedero.available_denominations:
-            accepts += f"${dinero.valor} "
-        print(accepts)
-        for product in self.products:
-            print(f"Codigo: {product.code} - {product.name} - ${product.price} - Stock:{product.stock}")
-
-    def verify_selected_product_code(self):
-        self.selected_product_code = input()
-        selected_product = next((product for product in self.products if product.code == self.selected_product_code), None)
-
-        if selected_product is None or selected_product.stock == 0:
-            print("Intenta de nuevo")
-            self.verify_selected_product_code()
+    def create_widgets(self):
+        self.display_var = tk.StringVar()
+        display = tk.Entry(self.root, textvariable=self.display_var, font=('Helvetica', 20), justify='right')
+        display.grid(row=0, column=0, columnspan=4, sticky='ew')
+        
+        for i in range(10):
+            tk.Button(self.root, text=i, font=('Helvetica', 20), command=lambda num=i: self.process_money(num)).grid(row=1, column=i, sticky='nsew')
+        
+        self.balance_label = tk.Label(self.root, text="Balance: $0", font=('Helvetica', 20))
+        self.balance_label.grid(row=2, column=0, columnspan=4, sticky='ew')
+        
+        products = self.monedero.get_all_products()
+        if products:
+            print("Productos obtenidos correctamente:", products)  
+            for product in products:
+                print("Agregando botón para:", product.name)  
+                tk.Button(self.root, text=product.name, font=('Helvetica', 20), command=lambda prod=product: self.process_product(prod)).grid(row=3, column=products.index(product), sticky='nsew')
         else:
-            drop_product = self.receive_balance(selected_product.price)
-            if drop_product:
-                self.update_stock(selected_product)
+            messagebox.showerror("Error", "No se pudieron obtener los productos de la máquina.")
+            print('Error: No se pudieron obtener los productos de la máquina')
 
-    def receive_balance(self, product_price):
-        print("Por favor inserta tu saldo")
-        inserted_balance = 0
-        while product_price > inserted_balance:
-            self.balance = int(input())
-            balance_is_in_denominations = "si" if self.monedero.received_balance_is_in_denominations(inserted_balance=self.balance) else "no"
-            if self.monedero.received_balance_is_in_denominations(inserted_balance=self.balance):
-                inserted_balance += self.balance
-                print(f"Has insertado ${inserted_balance}")
+        tk.Button(self.root, text="Proceder con la Compra", font=('Helvetica', 20), command=self.proceed_with_purchase).grid(row=4, column=0, columnspan=4, sticky='ew')
+
+    def process_product(self, product):
+        self.selected_product = product
+        messagebox.showinfo("Producto Seleccionado", f"Has seleccionado {self.selected_product.name}. Por favor, ingresa el dinero.")
+
+    def update_balance_label(self):
+        self.balance_label.config(text=f"Balance: ${self.balance}")
+
+    def proceed_with_purchase(self):
+        if self.selected_product:
+            if self.selected_product.stock > 0:
+                if self.balance >= self.selected_product.price:
+                    self.balance -= self.selected_product.price
+                    self.selected_product.stock -= 1
+                    self.monedero.can_give_change(self.selected_product.price, self.balance) 
+                    messagebox.showinfo("Compra Exitosa", f"¡Compra exitosa! Has comprado {self.selected_product.name}. Tu cambio es {self.balance}.")
+                    self.selected_product = None
+                    self.balance = 0
+                    self.update_balance_label()
+                else:
+                    messagebox.showerror("Error", "Saldo insuficiente. Introduce más dinero.")
             else:
-                print("No aceptamos esa denominacion. Prueba con otra.")
+                messagebox.showerror("Error", "Producto agotado.")
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un producto primero.")
 
-        drop_product = False
-        if inserted_balance == product_price:
-            print("Entregar Product")
-            drop_product = True
+    def process_money(self, amount):
+        self.balance += str(amount)
+        self.update_balance_label()
 
-        if inserted_balance > product_price:
-            if self.monedero.total_money == 0:
-                print("Lo siento, en este momento no tenemos las monedas para darte cambio, intenta ingresando el saldo exacto.")
+    def update_balance_label(self):
+        try:
+            balance_value = int(self.balance)
+        except ValueError:
+            balance_value = 0  
+        self.balance_label.config(text=f"Balance: ${balance_value}")
+class VendingMachineAPI:
+    def __init__(self, base_url):
+        self.base_url = base_url.rstrip("/")
+
+    def get_products_by_id(self, machine_id):
+        url = f"{self.base_url}/api/vendingmachine/{machine_id}/products"
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                return response.json()
             else:
-                drop_product = self.monedero.can_give_change(price=product_price, balance=inserted_balance)
-
-        return drop_product
-
-    def update_stock(self, product):
-        product.stock -= 1
+                print(f"Error al obtener los productos de la máquina {machine_id}: {response.text}")
+                return []
+        except requests.RequestException as e:
+            print(f"Error de conexión: {e}")
+            return []
 
 if __name__ == "__main__":
-    maquina = Maquina()
-    maquina.machine_loop()
+    root = tk.Tk()
+    base_url = "http://127.0.0.1:7777"  
+    app = Maquina(root, id=123, base_url=base_url) 
+    root.mainloop() 
