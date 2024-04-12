@@ -1,6 +1,5 @@
 // render function for this page 
 
-
 export default function Page() {
     return (
         <div>

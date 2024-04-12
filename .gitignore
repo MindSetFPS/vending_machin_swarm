@@ -5,3 +5,4 @@ venv
 vending_machine_db
 node_modules
 .next
+products.db
