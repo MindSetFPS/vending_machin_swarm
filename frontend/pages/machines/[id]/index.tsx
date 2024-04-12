@@ -1,20 +1,20 @@
-'use client'
+// 'use client'
 
 import { Button, Link } from "@nextui-org/react"
 
 import { useEffect, useState } from "react"
-
+import { useRouter } from 'next/router'
 import { getMachineSales } from "@/Sale/SaleController"
 import { Sale } from "@/Sale/Sale"
 import { SaleResponse } from "@/Sale/SaleResponse"
 
-export default function Page({ params }){
-   
+export default function Page(){
+    const router = useRouter() 
     const [ sales, setSales ] = useState<SaleResponse[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
-            setSales(await getMachineSales(params.id))
+            setSales(await getMachineSales(router.query.id))
         }
 
         fetchData().catch( (error) => {
@@ -25,10 +25,10 @@ export default function Page({ params }){
 
     return (
         <>
-            <p> Machine: {params.id}</p>
+            <p> Machine: {router.query.id}</p>
             <Button
                 as={Link}
-                href={`/assign-products/${params.id}`}
+                href={`/assign-products/${router.query.id}`}
             >
                 Asignar Productos
             </Button>
