@@ -11,17 +11,15 @@ import { SaleResponse } from "@/Sale/SaleResponse"
 export default function Page(){
     const router = useRouter() 
     const [ sales, setSales ] = useState<SaleResponse[]>([])
-
     useEffect(() => {
-        const fetchData = async () => {
-            setSales(await getMachineSales(router.query.id))
+        if(!router.query.id){
+            return
         }
-
-        fetchData().catch( (error) => {
-            console.error(error) 
+        
+        getMachineSales(Number(router.query.id)).then((res) => {
+            setSales(res)
         })
-
-    }, [])
+    }, [router.query.id])
 
     return (
         <>

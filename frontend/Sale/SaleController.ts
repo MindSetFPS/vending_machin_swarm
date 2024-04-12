@@ -29,7 +29,6 @@ const getMachineSales = (machineId: number): Promise<SaleResponse[]> => {
     return fetch(url, { cache: 'no-store' })
         .then((response) => response.json())
         .then((data) => data.map((saleData) => {
-            console.log(saleData.sale)
             let sale = new SaleResponse()
 
             let productData = {
