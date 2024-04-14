@@ -2,6 +2,7 @@ import { Button, Link } from "@nextui-org/react"
 import { getProducts } from "@/Product/ProductController"
 import { useEffect, useState } from "react"
 import { Product } from "@/Product/Product"
+import CreateProductModal from "@/components/CreateProductModal" 
 
 export default function Product(){
 
@@ -23,6 +24,7 @@ export default function Product(){
 
             </div>
 
+            <CreateProductModal />
             {
                 products && products.length == 0 ? 
                 <>

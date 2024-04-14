@@ -1,7 +1,7 @@
 import { Product } from "./Product"
 
 // Get a single product from the API
-export const getProduct = (id: number): Promise<Product> => {
+export const getProductById = (id: number): Promise<Product> => {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/product/${id}`;
     return fetch(url, { cache: 'no-store' })
         .then((response) => response.json())
@@ -38,3 +38,19 @@ export const getProducts = (): Promise<Product[]> => {
             return []
         })
 };
+
+// create product 
+export const createProduct = (name: string, price: number, code: string) => {
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/create`;
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: name,
+            price: price,
+            code: code
+        })
+    })
+}
