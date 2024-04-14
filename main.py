@@ -4,7 +4,8 @@ from Server.Controllers.ProductController import product_controller
 from Server.Controllers.SaleController import sale_controller 
 from Server.Controllers.VendingMachineController import vending_machine_controller
 from Server.Controllers.VendingMachineProductStockController import vending_machine_product_stock_controller
-
+from Server.Controllers.IncidentController import incident_controller 
+from Server.Models.Incident import Incident
 from Server.Models.Product import Product
 from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
 from Server.Models.Sale import Sale
@@ -214,3 +215,7 @@ async def get_sales_by_machine_id(machine_id: int):
             }
         })
     return sales_json
+
+@app.post("/api/warnings/create")
+async def create_warning(incident: Incident):
+    new_warning = incident_controller.create_warning(incident=incident)
