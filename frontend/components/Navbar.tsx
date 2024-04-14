@@ -32,7 +32,7 @@ export default function Nav() {
         </NavbarItem>
 
         <NavbarItem isActive={false}>
-          <Link href="/incidencias" aria-current="page">
+          <Link href="/incidents" aria-current="page">
             Incidencias
           </Link>
         </NavbarItem>
