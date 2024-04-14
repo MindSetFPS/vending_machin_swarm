@@ -1,9 +1,21 @@
 import { Button, Link } from "@nextui-org/react"
 import { getProducts } from "@/Product/ProductController"
+import { useEffect, useState } from "react"
+import { Product } from "@/Product/Product"
 
-export default async function Product(){
-    const data = await getProducts()
-    console.log(data)
+export default function Product(){
+
+    const [ products, setProducts ] = useState<Product[]>([])
+   
+    useEffect(() => {
+        getProducts().then((res) => {
+            setProducts(res)
+            console.log(res)
+        })
+    }, []) 
+
+    if(products.length == 0) return("No products ")
+
     return(
         <>
             <div className="container">
@@ -12,7 +24,7 @@ export default async function Product(){
             </div>
 
             {
-                data.length == 0 ? 
+                products && products.length == 0 ? 
                 <>
                 <Button
                     href="/products/create"
@@ -23,7 +35,7 @@ export default async function Product(){
 
                 : 
                 <div>
-                    {data.map((e) => (
+                    {products.map((e) => (
                         <Link key={e.id} href={`/products/${e.id}`} >
                             <div className="outline m-2 p-2 rounded-lg outline-2 outline-gray-200  shadow-md hover:shadow-lg transition-all block w-full">
                                 Product {e.id}
