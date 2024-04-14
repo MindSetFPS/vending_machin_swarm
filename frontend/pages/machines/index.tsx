@@ -25,7 +25,7 @@ export default function Machines() {
     }
 
     if (!vendingMachines) return ("no items ")
-    if (vendingMachines.length == 0) return ("no items for real ")
+    // if (vendingMachines.length == 0) return ("no items for real ")
 
     return (
         <>

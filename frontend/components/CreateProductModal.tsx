@@ -16,8 +16,6 @@ export default function CreateProductModal() {
     }
 
     function handleClick(close){
-        console.log("clicked")
-        
         createProduct(name, price, code)
         cleanFields()
         close()
@@ -25,7 +23,7 @@ export default function CreateProductModal() {
 
     return (
         <>
-            <Button onPress={onOpen} color="primary">Open Modal</Button>
+            <Button onPress={onOpen} color="primary">Crear nuevo producto</Button>
             <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}

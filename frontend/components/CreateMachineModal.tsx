@@ -32,9 +32,10 @@ export default function CreateMachineModal({ onProductCreated }) {
     }, [])
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
     return (
         <>
-            <Button onPress={onOpen} color="primary">Open Modal</Button>
+            <Button onPress={onOpen} color="primary">Crear maquina expendedora</Button>
             <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}

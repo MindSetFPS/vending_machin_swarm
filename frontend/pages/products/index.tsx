@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Product } from "@/Product/Product"
 import CreateProductModal from "@/components/CreateProductModal" 
 
-export default function Product(){
+export default function ProductPage(){
 
     const [ products, setProducts ] = useState<Product[]>([])
    
@@ -15,7 +15,7 @@ export default function Product(){
         })
     }, []) 
 
-    if(products.length == 0) return("No products ")
+    // if(products.length == 0) return("No products ")
 
     return(
         <>
@@ -26,16 +26,7 @@ export default function Product(){
 
             <CreateProductModal />
             {
-                products && products.length == 0 ? 
-                <>
-                <Button
-                    href="/products/create"
-                    as={Link}
-                    color="primary"
-                >Crear un producto</Button>
-                </>
-
-                : 
+                products && products.length > 0 ? 
                 <div>
                     {products.map((e) => (
                         <Link key={e.id} href={`/products/${e.id}`} >
@@ -45,6 +36,8 @@ export default function Product(){
                         </Link>
                     ))}
                 </div>
+                :
+                ""
             }
 
         </>
