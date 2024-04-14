@@ -1,12 +1,21 @@
 // import React from "react";
-'use client'
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
-import {AcmeLogo} from "./Logo";
+// 'use client'
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
+import { AcmeLogo } from "./Logo";
 
-import { usePathname } from 'next/navigation'
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Nav() {
-  const pathname = usePathname()
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!router.isReady) {
+      return
+    } 
+  }, [router.isReady])
+
   return (
     <Navbar>
       <NavbarBrand>
@@ -21,8 +30,14 @@ export default function Nav() {
             Vending Machines
           </Link>
         </NavbarItem>
+
+        <NavbarItem isActive={false}>
+          <Link href="/incidencias" aria-current="page">
+            Incidencias
+          </Link>
+        </NavbarItem>
         <NavbarItem isActive>
-          <Link href="/products" aria-current="page">
+          <Link href="/products" >
             Products
           </Link>
         </NavbarItem>
