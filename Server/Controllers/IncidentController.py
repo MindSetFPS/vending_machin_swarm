@@ -8,7 +8,7 @@ class IncidentController:
         self.repository = incident_repository
         
 
-    def create_warning(self, incident: Incident):
+    def create_incident(self, incident: Incident):
         self.repository.create(incident)
     
     def get_all(self):

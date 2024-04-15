@@ -5,7 +5,7 @@ from Server.Controllers.SaleController import sale_controller
 from Server.Controllers.VendingMachineController import vending_machine_controller
 from Server.Controllers.VendingMachineProductStockController import vending_machine_product_stock_controller
 from Server.Controllers.IncidentController import incident_controller 
-from Server.Models.Incident import Incident
+from Server.Models.Incident import Incident, Status
 from Server.Models.Product import Product
 from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
 from Server.Models.Sale import Sale
@@ -74,9 +74,6 @@ async def get_products_by_vending_machine(machine_id: int):
     vending_machine_products_list = vending_machine_product_stock_controller.get_products_by_machine_id(machine_id=machine_id)
     return vending_machine_products_list
 
-
-
-
 # Modificar una maquina
 @app.post("/api/vendingmachine/update")
 async def update_vending_machine(id: int, is_on: bool):
@@ -96,11 +93,11 @@ async def refill_vending_machine(vending_machine_stock: VendingMachineProductsLi
 async def assign_products_to_vending_machine(products: List[int], machine_id: int):
     for product_id in products:
         vending_machine_product_stock_controller.refill_vending_machine(machine_id=machine_id, product_id=product_id, stock=0)
+        incident_controller.create_incident(incident=Incident(description=Status.refill_required, active=True, product_id=product_id, machine_id=machine_id))
     
     return {
         "ok": True
     }
-
 
 # Crear una maquina (en el servidor)
 @app.post("/api/vendingmachine/create")
@@ -215,7 +212,6 @@ async def get_sales_by_machine_id(machine_id: int):
             }
         })
     return sales_json
-
 
 ################################################
 ################# Incidents ####################

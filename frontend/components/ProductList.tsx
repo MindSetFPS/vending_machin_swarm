@@ -74,7 +74,7 @@ export default function ProductList({ products, vendingMachineId }: ProducListPr
     return (
         <>
             <div className="flex">
-                <Button onPress={assignButton} > Asignar </Button>
+                <Button onPress={assignButton} color="primary" > Asignar </Button>
 
                 {productsToAdd.map((product: number) => (
                     <div key={product}>

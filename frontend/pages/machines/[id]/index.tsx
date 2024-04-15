@@ -43,7 +43,7 @@ export default function Page() {
             </Button>
 
             <div>
-                <MachineTabs sales={sales} products={products} />
+                <MachineTabs sales={sales} products={products} machineId={router.query.id} />
                 {
                     sales && sales.length > 0 ?
                         <div>{sales.map((sale) => (

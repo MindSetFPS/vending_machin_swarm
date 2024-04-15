@@ -1,4 +1,4 @@
-import Incident, { IIncidentResponse } from "./Incidents";
+import Incident, { IIncident, IIncidentResponse } from "./Incidents";
 
 const getIncidents = (): Promise<Incident[]> => {
     
@@ -7,7 +7,7 @@ const getIncidents = (): Promise<Incident[]> => {
         .then((res) => res.json())
         .then((data) => data.map((incidentData: IIncidentResponse) => {
             const { id, description, fix_at_url, active } = incidentData;
-            let incident = new Incident(id, description, fix_at_url, active)
+            let incident: IIncident = { id: id, description: description, fixAtUrl: fix_at_url, active: active}
             return incident
         }))
 }

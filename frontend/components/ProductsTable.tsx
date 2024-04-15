@@ -7,7 +7,7 @@ import { EyeIcon } from "./EyeIcon";
 import { EditIcon } from "./EditIcon";
 import { DeleteIcon } from "./DeleteIcon";
 
-export default function ProductsTable({ machineProductsList }) {
+export default function ProductsTable({ machineProductsList, machineId }) {
     console.log(machineProductsList)
     const columns = [
         {
@@ -83,7 +83,7 @@ export default function ProductsTable({ machineProductsList }) {
                 <TableHeader columns={columns}>
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                 </TableHeader>
-                <TableBody items={machineProductsList}>
+                <TableBody items={machineProductsList} emptyContent={<Button as={Link} href={`/assign-products/${machineId}`} >Asignar products a esta maquina</Button>}>
                     {(item) => (
                         <TableRow key={item.productId}>
                             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}

@@ -2,7 +2,7 @@ import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import SalesTable from "./SalesTable";
 import ProductsTable from "./ProductsTable";
 
-export function MachineTabs({ sales, products }) {
+export function MachineTabs({ sales, products, machineId}) {
     return (
         <div className="flex w-full flex-col">
             <Tabs aria-label="Options">
@@ -10,7 +10,7 @@ export function MachineTabs({ sales, products }) {
                     <SalesTable salesList={sales} />
                 </Tab>
                 <Tab key="products" title="Products">
-                    <ProductsTable machineProductsList={products} />
+                    <ProductsTable machineProductsList={products} machineId={machineId}/>
                 </Tab>
             </Tabs>
         </div>
