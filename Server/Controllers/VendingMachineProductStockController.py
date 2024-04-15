@@ -28,7 +28,7 @@ class VendingMachineProductStockLinkController:
 
     def decrease_product_stock(self, machine_id, product_id):
         stock = self.repository.get_by_id(machine_id=machine_id, product_id=product_id)
-        stock.stock = stock.stock -10
+        stock.stock = stock.stock -1
 
         self.repository.update(stock)
 
