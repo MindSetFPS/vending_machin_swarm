@@ -1,10 +1,10 @@
 import { Sale } from "./Sale"
 import { SaleResponse } from "@/Sale/SaleResponse"
 
-const getSale = (): Sale => {
+/* const getSale = (): Sale => {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/`
     return
-}
+} */
 
 const getSales = (): Promise<Sale[]> => {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sales`
@@ -44,7 +44,6 @@ const getMachineSales = (machineId: number): Promise<SaleResponse[]> => {
 
             return sale
         }))
-
 }
 
-export { getSale, getSales, getMachineSales }
+export { getSales, getMachineSales }

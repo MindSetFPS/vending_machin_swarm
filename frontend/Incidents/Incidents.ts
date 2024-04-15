@@ -18,3 +18,10 @@ export default class Incident implements IIncident {
         this.active = active;
     }
 }
+
+export interface IIncidentResponse {
+    id: number,
+    description: string,
+    fix_at_url: string,
+    active: boolean
+}

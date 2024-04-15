@@ -216,6 +216,18 @@ async def get_sales_by_machine_id(machine_id: int):
         })
     return sales_json
 
+
+################################################
+################# Incidents ####################
+################################################
+
 @app.post("/api/warnings/create")
 async def create_warning(incident: Incident):
     new_warning = incident_controller.create_warning(incident=incident)
+    
+@app.get('/api/incidents')
+async def get_incidents():
+    incidents = incident_controller.get_all()
+    print(incidents)
+    
+    return incidents
