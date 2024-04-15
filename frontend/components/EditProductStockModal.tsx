@@ -1,6 +1,6 @@
 import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Checkbox, Input, } from "@nextui-org/react"
 
-import { getVendingMachines, createVendingMachine, refillVendingMachineStock} from "@/VendingMachine/VendingMachineController"
+import { getVendingMachines, createVendingMachine, refillVendingMachineStock } from "@/VendingMachine/VendingMachineController"
 import { useEffect, useState } from "react"
 import { VendingMachine } from "@/VendingMachine/VendingMachine"
 
@@ -8,7 +8,7 @@ export default function EditProductStockModal({ onProductUpdated, productId, mac
 
     const [name, setName] = useState<string>()
     const [vendingMachines, setVendingMachines] = useState<VendingMachine[]>()
-    const [ newStock, setNewStock ] = useState<number>(stock)
+    const [newStock, setNewStock] = useState<number>(stock)
 
     function updateVendingMachineList() {
         getVendingMachines()
@@ -17,8 +17,7 @@ export default function EditProductStockModal({ onProductUpdated, productId, mac
             })
     }
 
-    function handleCreateButton(onClose){
-        // updateVendingMachineList()
+    function handleCreateButton(onClose) {
         refillVendingMachineStock(machineId, productId, newStock)
         onProductUpdated()
         onClose()
@@ -31,7 +30,7 @@ export default function EditProductStockModal({ onProductUpdated, productId, mac
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
         <>
-            <Button onPress={onOpen} color="primary">Open Modal</Button>
+            <Button onPress={onOpen} color="primary">Cambiar stock</Button>
             <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -41,11 +40,11 @@ export default function EditProductStockModal({ onProductUpdated, productId, mac
                     {(onClose) => (
                         <>
                             <ModalHeader>
-                               Editar Producto {productId} en maquina {machineId} 
+                                Editar Producto {productId} en maquina {machineId}
                             </ModalHeader>
                             <ModalBody>
                                 <div className="flex justify-between">
-                                    <Input className="px-2" type="number" label="stock" labelPlacement="inside" value={newStock} onChange={(e) => setNewStock(e.target.value)}/>
+                                    <Input className="px-2" type="number" label="stock" labelPlacement="inside" value={String(newStock)} onChange={(e) => setNewStock(Number(e.target.value))} />
                                 </div>
 
                             </ModalBody>
