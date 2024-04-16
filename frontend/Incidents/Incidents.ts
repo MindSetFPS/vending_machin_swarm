@@ -3,8 +3,8 @@ export interface IIncident {
     description: string,
     fixAtUrl?: string,
     active: boolean,
-    machine_id?: number,
-    product_id?: number,
+    machineId?: number,
+    productId?: number,
 }
 
 /* export default class Incident implements IIncident {

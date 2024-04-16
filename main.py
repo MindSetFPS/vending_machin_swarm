@@ -10,8 +10,8 @@ from Server.Models.Product import Product
 from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
 from Server.Models.Sale import Sale
 
-from fastapi import FastAPI, Request
-from typing import List
+from fastapi import FastAPI, Request, Body
+from typing import List, Annotated
 import json
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -225,5 +225,10 @@ async def create_warning(incident: Incident):
 async def get_incidents():
     incidents = incident_controller.get_all()
     print(incidents)
-    
     return incidents
+
+@app.post('/api/incidents/update')
+async def update_incident(id: Annotated[int, Body()], is_active: Annotated[bool, Body()]):
+    incident_controller.update_is_active(id=id, is_active=is_active)
+    incident = incident_controller.get_incident_by_id(id=id)
+    return incident
