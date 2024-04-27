@@ -1,7 +1,7 @@
 from sqlmodel import Field, SQLModel, Relationship
 from typing import Optional
 from datetime import datetime
-from Server.Models.Product import Product
+from Server.Product.domain.Product import Product
 
 class Sale(SQLModel, table=True):
     __tablename__ = "sales"

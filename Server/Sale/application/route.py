@@ -10,7 +10,6 @@ router = APIRouter(
 @router.post("/api/sale/create")
 async def create_sale(machine_id: int, product_id: int): # original
     successfull = sale_controller.create_sale(product_id=product_id, machine_id=machine_id)
-
     return {
         "success" : successfull 
     }

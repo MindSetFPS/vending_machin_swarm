@@ -3,7 +3,7 @@ from sqlmodel import create_engine, SQLModel, Session
 
 # We need to have these classes here to register them in database
 from Server.Models.Dinero import Dinero
-from Server.Models.Product import Product
+from Server.Product.domain.Product import Product
 from Server.Sale.domain.Sale import Sale
 from Server.VendingMachine.domain.VendingMachine import VendingMachine, VendingMachineProductsLink
 from Server.Incident.domain.Incident import Incident

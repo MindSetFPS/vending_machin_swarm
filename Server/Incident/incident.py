@@ -13,7 +13,6 @@ async def incident():
     }
     
 
-
 @router.get('/')
 async def get_incidents():
     incidents = incident_controller.get_all()
@@ -21,8 +20,6 @@ async def get_incidents():
     
     return incidents
 
-
 @router.post("/api/warnings/create")
 async def create_warning(incident: Incident):
     new_warning = incident_controller.create_warning(incident=incident)
-    

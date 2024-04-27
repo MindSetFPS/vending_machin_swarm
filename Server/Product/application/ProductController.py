@@ -1,8 +1,8 @@
 # from Repository.ProductRepository import product_repository
-from Server.Repository.ProductRepository import product_repository
+from Server.Product.infrastructure.ProductRepository import product_repository
 # from Repository.Repository import IDatabase
 from Server.Repository.Repository import IDatabase
-from Server.Models.Product import Product
+from Server.Product.domain.Product import Product
 from sqlmodel import select
 
 class ProductController:

@@ -1,7 +1,7 @@
 # from Repository.Repository import IDatabase, repository
 from Server.Repository.Repository import IDatabase, repository
 from sqlmodel import select
-from Server.Models.Product import Product
+from Server.Product.domain.Product import Product
 
 class ProductRepository:
     def __init__(self, repository: IDatabase) -> None:
