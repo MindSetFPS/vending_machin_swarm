@@ -2,12 +2,12 @@ from Server.Repository.ProductRepository import product_repository
 
 from Server.Controllers.ProductController import product_controller
 from Server.Controllers.SaleController import sale_controller 
-from Server.Controllers.VendingMachineController import vending_machine_controller
+from Server.VendingMachine.application.VendingMachineController import vending_machine_controller
 from Server.Controllers.VendingMachineProductStockController import vending_machine_product_stock_controller
 from Server.Incident.application.IncidentController import incident_controller 
 from Server.Incident.domain.Incident import Incident, Status
 from Server.Models.Product import Product
-from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
+from Server.VendingMachine.domain.VendingMachine import VendingMachine, VendingMachineProductsLink
 from Server.Models.Sale import Sale
 from Server.Incident import incident
 

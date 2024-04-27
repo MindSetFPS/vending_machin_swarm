@@ -1,14 +1,14 @@
 from Server.Models.Dinero import Dinero
 from Server.Models.Product import Product
 from Server.Models.Sale import Sale
-from Server.Models.VendingMachine import VendingMachine
+from Server.VendingMachine.domain.VendingMachine import VendingMachine
 import time, os, random
 import requests
 from sqlmodel import Field, SQLModel, create_engine
 from Server.Models.Dinero import Dinero
 from Server.Models.Product import Product
 from Server.Models.Sale import Sale
-from Server.Models.VendingMachine import VendingMachine
+from Server.VendingMachine.domain.VendingMachine import VendingMachine
 import time, os, random
 import requests
 from sqlmodel import Field, SQLModel, create_engine

@@ -5,7 +5,7 @@ from sqlmodel import create_engine, SQLModel, Session
 from Server.Models.Dinero import Dinero
 from Server.Models.Product import Product
 from Server.Models.Sale import Sale
-from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
+from Server.VendingMachine.domain.VendingMachine import VendingMachine, VendingMachineProductsLink
 from Server.Incident.domain.Incident import Incident
 
 class IDatabase(ABC):

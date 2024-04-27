@@ -1,5 +1,5 @@
 from Server.Repository.Repository import IDatabase, repository
-from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
+from Server.VendingMachine.domain.VendingMachine import VendingMachine, VendingMachineProductsLink
 from sqlmodel import select
 
 class VendingMachineRepository:

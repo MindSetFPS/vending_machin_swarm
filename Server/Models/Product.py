@@ -1,6 +1,6 @@
 from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
-from Server.Models.VendingMachine import VendingMachineProductsLink
+from Server.VendingMachine.domain.VendingMachine import VendingMachineProductsLink
 
 class Product(SQLModel, table=True):
 

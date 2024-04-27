@@ -1,6 +1,6 @@
 from Server.Repository.Repository import IDatabase
 from Server.Repository.VendingMachineProductStockRepository import vending_machine_product_stock_repository
-from Server.Models.VendingMachine import VendingMachineProductsLink
+from Server.VendingMachine.domain.VendingMachine import VendingMachineProductsLink
 from sqlmodel import select
 
 class VendingMachineProductStockLinkController:

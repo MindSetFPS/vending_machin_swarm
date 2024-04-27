@@ -5,7 +5,7 @@ from Server.Repository.Repository import IDatabase
 from Server.Repository.SaleRepository import sale_repository
 from Server.Incident.application.IncidentController import incident_controller
 from Server.Controllers.VendingMachineProductStockController import vending_machine_product_stock_controller
-from Server.Models.Incident import Status
+from Server.Incident.domain.Incident import Status
 
 class SaleController:
     def __init__(self, sale_repository: IDatabase) -> None:
