@@ -1,16 +1,16 @@
 from Server.Controllers.ProductController import product_controller
-from Server.Controllers.SaleController import sale_controller 
 from Server.Models.Product import Product
 from Server.Incident import incident
 from Server.VendingMachine.application import route as VendingMachineRouter
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from Server.Sale.application import route as SaleRouter
 
 app = FastAPI()
 
 app.include_router(router=incident.router)
 app.include_router(router=VendingMachineRouter.router)
-
+app.include_router(router=SaleRouter.router)
 
 origins = [
     "http://localhost:3000",
@@ -31,6 +31,8 @@ async def root():
     return {
         "message" : "Hello World"
     }
+    
+    
 #################################################
 
 # Listar todos los productos
@@ -76,49 +78,3 @@ async def create_product(product: Product): # Do not send the id in the request
     }
 
 #################################################
-
-# Crear una venta
-@app.post("/api/sale/create")
-async def create_sale(machine_id: int, product_id: int): # original
-    successfull = sale_controller.create_sale(product_id=product_id, machine_id=machine_id)
-
-    return {
-        "success" : successfull 
-    }
- 
-# Modificar una venta
-
-# Borrar una venta
-
-# Obtener una venta
-@app.get("/api/sale/{sale_id}")
-async def get_sale(sale_id: int):
-    sale = sale_controller.get_sale_by_id(sale_id=sale_id)
-    return sale
-
-# Leer todas las ventas
-@app.get("/api/sales")
-async def get_sales():
-    sales = sale_controller.get_sales()
-    return sales
-
-# Obtener ventas por maquina
-@app.get("/api/sales/machine/{machine_id}")
-async def get_sales_by_machine_id(machine_id: int):
-    sales = sale_controller.get_sales_by_machine_id(machine_id=machine_id)
-    sales_json = [] 
-    for sale, product in sales:
-
-        sales_json.append({
-            "sale": {
-                "id": sale.id,
-                "machine_id": sale.machine_id,
-                "date": sale.date,
-                "product": {
-                    "id": product.id,
-                    "name": product.name,
-                    "price": product.price #Note: make price in a per machine basis
-                }
-            }
-        })
-    return sales_json
