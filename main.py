@@ -11,8 +11,8 @@ from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsL
 from Server.Models.Sale import Sale
 from Server.Incident import incident
 
-from fastapi import FastAPI, Request
-from typing import List
+from fastapi import FastAPI, Request, Body
+from typing import List, Annotated
 import json
 from fastapi.middleware.cors import CORSMiddleware
 

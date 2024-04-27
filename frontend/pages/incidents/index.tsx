@@ -1,16 +1,16 @@
 import Title from "@/components/Title"
 import { getIncidents } from "@/Incidents/IncidentController"
-import Incident from "@/Incidents/Incidents"
+import { IIncident } from "@/Incidents/Incidents"
 import { useEffect, useState } from "react"
 import { Link, Spinner } from "@nextui-org/react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 import EditProductStockModal from "@/components/EditProductStockModal";
+import { updateIncident } from "@/Incidents/IncidentController";
 
 export default function Incidents() {
 
-    const [incidents, setIncidents] = useState<Incident[]>()
+    const [incidents, setIncidents] = useState<IIncident[]>()
     const [loading, setLoading] = useState<boolean>(true)
-
 
     useEffect(() => {
         setLoading(true)
@@ -19,7 +19,6 @@ export default function Incidents() {
             setLoading(false)
         })
         console.log(incidents)
-
     }, [])
 
     if (loading) return (<Spinner />)
@@ -30,22 +29,44 @@ export default function Incidents() {
             </Title>
             {
                 incidents && incidents.length > 0 ?
-                    incidents.map((incident: Incident) => (
+                    incidents.map((incident: IIncident) => (
                         <Card key={incident.id} className="mb-4">
                             <CardHeader>
-                            { incident.fixAtUrl ? 
+                            <div>
+
+                            {/* { incident.fixAtUrl ? 
                                 <Link href={incident.fixAtUrl}>
                                     Fix
                                 </Link>
                                 :
                                 ''
+                            } */}
+                            </div>
+                            <div>
+
+                            {
+                                incident.active ? 
+                                
+                                <EditProductStockModal 
+                                productId={incident.productId} 
+                                machineId={incident.machineId} 
+                                stock={10}  
+                                onProductUpdated={() => updateIncident(incident.id, false)}
+                                />
+                                :
+                                ''
                             }
-                                {/* <EditProductStockModal productId={1} machineId={1} stock={10}  onProductUpdated={() => console.log("yess")}/> */}
+                            </div>
                             </CardHeader>
                             <CardBody>
                                 <p>
-                                    {incident.fixAtUrl}
+                                    <div>
+                                    {/* {incident.fixAtUrl} */}
+                                    </div>
                                     {incident.description}
+                                    <div>
+                                        Status: {incident.active ? 'Activo' : 'Resuelto'}
+                                    </div>
                                 </p>
                                 
                             </CardBody>

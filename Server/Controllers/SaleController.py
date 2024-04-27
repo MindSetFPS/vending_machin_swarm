@@ -5,6 +5,7 @@ from Server.Repository.Repository import IDatabase
 from Server.Repository.SaleRepository import sale_repository
 from Server.Incident.application.IncidentController import incident_controller
 from Server.Controllers.VendingMachineProductStockController import vending_machine_product_stock_controller
+from Server.Models.Incident import Status
 
 class SaleController:
     def __init__(self, sale_repository: IDatabase) -> None:
@@ -20,9 +21,11 @@ class SaleController:
         if v is not None and v.stock > 0:
             if v.stock == 1:
                 incident = Incident(
-                    description=f"Machine with id {machine_id} has run out of existences of product with id {product_id}.",
+                    description=Status.refill_required,
                     fix_at_url=f"/machines/{machine_id}",
-                    active=True 
+                    active=True,
+                    machine_id=machine_id,
+                    product_id=product_id
                 )
                 incident_controller.create_incident(incident)
             sale = Sale(product_id=product_id, machine_id=machine_id)

@@ -22,7 +22,7 @@ class IncidentRepository:
     def create(self, incident: Incident):
         return self._repository.create(incident)
     
-    def update(self, id):
-        return self._repository.update(id)
+    def update(self, item):
+        return self._repository.update(item)
     
 incident_repository = IncidentRepository(repository=repository)
