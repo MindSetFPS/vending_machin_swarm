@@ -1,5 +1,5 @@
 from Server.Repository.Repository import IDatabase
-from Server.Repository.VendingMachineProductStockRepository import vending_machine_product_stock_repository
+from Server.VendingMachine.application.VendingMachineProductStockRepository import vending_machine_product_stock_repository
 from Server.VendingMachine.domain.VendingMachine import VendingMachineProductsLink
 from sqlmodel import select
 
