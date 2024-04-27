@@ -6,7 +6,7 @@ from Server.Models.Dinero import Dinero
 from Server.Models.Product import Product
 from Server.Models.Sale import Sale
 from Server.Models.VendingMachine import VendingMachine, VendingMachineProductsLink
-from Server.Models.Incident import Incident
+from Server.Incident.domain.Incident import Incident
 
 class IDatabase(ABC):
     @abstractmethod

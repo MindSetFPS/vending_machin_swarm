@@ -1,9 +1,9 @@
 from Server.Models.Sale import Sale
-from Server.Models.Incident import Incident
+from Server.Incident.domain.Incident import Incident
 
 from Server.Repository.Repository import IDatabase
 from Server.Repository.SaleRepository import sale_repository
-from Server.Controllers.IncidentController import incident_controller
+from Server.Incident.application.IncidentController import incident_controller
 from Server.Controllers.VendingMachineProductStockController import vending_machine_product_stock_controller
 
 class SaleController:

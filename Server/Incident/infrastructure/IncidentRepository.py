@@ -1,6 +1,6 @@
 from Server.Repository.Repository import IDatabase, repository
 
-from Server.Models.Incident import Incident 
+from Server.Incident.domain.Incident import Incident 
 
 from sqlmodel import select
 

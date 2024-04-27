@@ -1,6 +1,6 @@
 from Server.Repository.Repository import IDatabase
-from Server.Models.Incident import Incident
-from Server.Repository.IncidentRepository import incident_repository
+from Server.Incident.domain.Incident import Incident
+from Server.Incident.infrastructure.IncidentRepository import incident_repository
 from sqlmodel import select
 
 class IncidentController:
