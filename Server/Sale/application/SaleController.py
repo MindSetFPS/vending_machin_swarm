@@ -1,7 +1,7 @@
 from Server.Sale.domain.Sale import Sale
 from Server.Incident.domain.Incident import Incident
 
-from Server.Repository.Repository import IDatabase
+from Server.database.Repository import IDatabase
 from Server.Sale.infrastructure.SaleRepository import sale_repository
 from Server.Incident.application.IncidentController import incident_controller
 from Server.VendingMachine.application.VendingMachineProductStockController import vending_machine_product_stock_controller

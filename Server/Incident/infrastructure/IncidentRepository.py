@@ -1,4 +1,4 @@
-from Server.Repository.Repository import IDatabase, repository
+from Server.database.Repository import IDatabase, repository
 
 from Server.Incident.domain.Incident import Incident 
 

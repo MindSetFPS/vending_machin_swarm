@@ -1,6 +1,6 @@
 from Server.VendingMachine.domain.VendingMachine import VendingMachine, VendingMachineProductsLink
 from Server.Sale.domain.Sale import Sale
-from Server.Repository.Repository import IDatabase
+from Server.database.Repository import IDatabase
 from Server.VendingMachine.infrastructure.VendingMachineRepository import vending_machine_repository
 from Server.VendingMachine.application.VendingMachineProductStockController import vending_machine_product_stock_controller
 from sqlmodel import select

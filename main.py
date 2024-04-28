@@ -1,5 +1,3 @@
-from Server.Product.application.ProductController import product_controller
-from Server.Product.domain.Product import Product
 from Server.Incident import incident
 from Server.VendingMachine.application import route as VendingMachineRouter
 from fastapi import FastAPI

@@ -1,5 +1,5 @@
 # from Repository.Repository import IDatabase, repository
-from Server.Repository.Repository import IDatabase, repository
+from Server.database.Repository import IDatabase, repository
 from sqlmodel import select
 from Server.Sale.domain.Sale import Sale
 from Server.Product.domain.Product import Product
